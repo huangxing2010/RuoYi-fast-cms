@@ -1,11 +1,18 @@
 
 
+<p align="center">
+	<img alt="logo" src="https://raw.githubusercontent.com/huangxing2010/RuoYi-fast-cms/refs/heads/main/public/demoImg/创意.png">
+</p>
+
+
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
 <h4 align="center">基于RuoYi v4.7.9开发的轻量级Java网站内容管理系统</h4>
 <p align="center">
 	<a href="https://gitee.com/y_project/RuoYi"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
 	<a href="https://gitee.com/y_project/RuoYi/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
+
+
 ## 
 一直想做一款java网站管理系统，曾经用过的各种PHPCMS 用于企业官网或门户网站算是轻便灵活，但是发现没有合适的，为了满足政务系统服务平台集约化站群定制化需求，结合多年网站设计开发经验由云而生。
 本项目基于RuoYi-fast二次开发，网站模版使用thymenleaf+bootstrap开发，多套风格模板，可自由选择。
