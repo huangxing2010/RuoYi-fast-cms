@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改文章内容')" />
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.7}" rel="stylesheet"/>
+    <link th:href="@{/css/partal.css}" rel="stylesheet"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <h3 class="title" th:text="*{article.articleTitle}"></h3>
+    <h4 class="sub-title" th:text="*{article.subhead}"></h4>
+    <div class="tabs-text">
+        <span>文章分类：[[*{categoryName}]]</span>
+        <span>添加者：[[*{article.createBy}]]</span>
+        <span>文章来源：[[*{article.source}]]</span>
+        <span>添加日期：[[${#dates.format(article.createTime, 'yyyy-MM-dd')}]]</span>
+    </div>
+    <div class="description" th:if="!${#strings.isEmpty(article.description)}" th:text="*{article.description}"></div>
+    <div class="page-content" th:utext="*{article.content}"></div>
+
+    <form class="form-horizontal m" id="form-article-edit">
+        <input name="articleId" th:field="*{article.articleId}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">审批意见：</label>
+            <div class="col-sm-10">
+                <textarea name="remark" class="form-control" placeholder="请输入备注" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">审批状态：</label>
+            <div class="col-sm-10">
+                <div class="radio-box" th:each="dict : ${@dict.getType('sys_check_status')}">
+                    <input type="radio" th:id="${'checkStatus_' + dict.dictCode}" name="checkStatus" th:value="${dict.dictValue}" th:field="*{article.checkStatus}">
+                    <label th:for="${'checkStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <!--<div class="col-sm-offset-5 col-sm-10">
+
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                    class="fa fa-check"></i>保 存
+            </button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                    class="fa fa-reply-all"></i>关 闭
+            </button>
+        </div>-->
+    </div>
+
+</div>
+
+
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: bootstrap-fileinput-js"/>
+<th:block th:include="include :: summernote-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "portal/article";
+    $("#form-article-edit").validate();
+    function submitHandler() {
+        if ($.validate.form()) {
+            var data = $("#form-article-edit").serializeArray();
+            console.log(5555, data)
+            $.ajax({
+                url: prefix + "/edit",
+                type: "post",
+                dataType: "json",
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍候...");
+                },
+                success: function(result) {
+                    console.log(999, result)
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successCallback(result);
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

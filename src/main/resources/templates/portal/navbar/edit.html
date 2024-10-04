@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改导航管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-navbar-edit" th:object="${portalNavbar}">
+            <input name="navId" th:field="*{navId}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">父分类ID：</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id="treeId" name="parentId" type="hidden" th:field="*{parentId}" />
+                        <input class="form-control" type="text" onclick="selectNavbarTree()" id="treeName" readonly="true" th:field="*{parentName}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">栏目名称：</label>
+                <div class="col-sm-8">
+                    <select class="form-control " data-placeholder="请选择栏目名称" id="categoryId" name="categoryId">
+                        <option value="">请选择栏目</option>
+                        <optgroup label="自定义栏目：">
+                            <block th:each="vos : ${categoryList}" th:if="${vos.type} == '3'">
+                                <option th:value="${vos.id}" th:text="${vos.name}"
+                                        th:selected="${portalNavbar?.categoryId == vos.id}"
+                                        data-special="3"
+
+                                ></option>
+                            </block>
+                        </optgroup>
+
+                        <optgroup label="文章栏目：">
+                            <block th:each="item : ${categoryList}" th:if="${item.type} == '0'">
+                                <option th:value="${item.id}" th:text="${item.name}"
+                                        th:selected="${portalNavbar?.categoryId == item.id}"
+                                        data-special="0"
+                                ></option>
+                                <option th:each="child: ${item.children}"
+                                        th:value="${child.id}"
+                                        th:text="'└ ' + ${child.name}"
+                                        th:unless="${#lists.isEmpty(item.children)}"
+                                        th:selected="${portalNavbar?.categoryId == child.id}"
+                                        data-special="0"
+                                ></option>
+                            </block>
+                        </optgroup>
+
+                        <optgroup label="专题栏目：">
+                            <block th:each="item : ${categoryList}" th:if="${item.type} == '2'">
+                                <option th:value="${item.id}" th:text="${item.name}"
+                                        th:selected="${portalNavbar?.categoryId == item.id}"
+                                        data-special="2"
+                                ></option>
+                                <option th:each="child: ${item.children}"
+                                        th:value="${child.id}"
+                                        th:text="'└ ' + ${child.name}"
+                                        th:unless="${#lists.isEmpty(item.children)}"
+                                        th:selected="${portalNavbar?.categoryId == child.id}"
+                                        data-special="2"
+                                ></option>
+                            </block>
+                        </optgroup>
+
+                        <optgroup label="单页名称：">
+                            <block th:each="vo : ${categoryList}" th:if="${vo.type} == '1'">
+                                <option th:value="${vo.id}" th:text="${vo.name}"
+                                        th:selected="${portalNavbar?.categoryId == vo.id}"
+                                        data-special="1"></option>
+                            </block>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">导航名称：</label>
+                <div class="col-sm-8">
+                    <input name="navName" th:field="*{navName}" id="navName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">文章类型：</label>
+                <div class="col-sm-8">
+                    <select name="articleType" class="form-control m-b" id="articleType" th:with="type=${@dict.getType('sys_article_type')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{articleType}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">导航类型：</label>
+                <div class="col-sm-8">
+                    <select name="navType" class="form-control m-b" th:with="type=${@dict.getType('sys_nav_type')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{navType}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图标：</label>
+                <div class="col-sm-8">
+                    <input name="navIcon" th:field="*{navIcon}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">跳转地址：</label>
+                <div class="col-sm-8">
+                    <input name="navSkip" th:field="*{navSkip}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">显示顺序：</label>
+                <div class="col-sm-8">
+                    <input name="sortNav" th:field="*{sortNav}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'navStatus_' + dict.dictCode}" name="navStatus" th:value="${dict.dictValue}" th:field="*{navStatus}">
+                        <label th:for="${'navStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">导航介绍：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "portal/navbar";
+        $("#form-navbar-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-navbar-edit').serialize());
+            }
+        }
+
+        /*导航管理-编辑-选择父导航管理树*/
+        function selectNavbarTree() {
+            var options = {
+                title: '导航管理选择',
+                width: "380",
+                url: prefix + "/selectNavbarTree/" + $("#treeId").val(),
+                callBack: doSubmit
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            console.log(1111, body.find('#treeId').val())
+            console.log(2222, body.find('#treeName').val())
+            $.modal.close(index);
+        }
+        //导航名称自动填写分类名称
+        $(document).ready(function () {
+            $('#categoryId').change(function () {
+                // var selectedValue = $(this).val(); // 选中的值给了表单
+                var label = $('#categoryId option:selected').attr('data-special');  //获取option的data-special属性值用作类型
+                var text = $('#categoryId option:selected').text(); //获取option的text属性值用作名称
+
+                $('#navName').val(text.replace(/└| /g, '')); //过滤L特殊符号
+                $('#articleType').val(label); //改变文章类型的选中值
+            });
+        });
+    </script>
+</body>
+</html>

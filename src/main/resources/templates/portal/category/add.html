@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增文章分类')" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-category-add">
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">栏目名称：</label>
+                <div class="col-sm-8">
+                    <input name="categoryName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">父分类ID：</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id="treeId" name="parentId" type="hidden" th:value="${portalCategory?.categoryId}"/>
+                        <input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${portalCategory?.categoryName}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">栏目介绍：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">缩略图：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="thumbnail">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="thumbnail" name="file" type="file">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">显示顺序：</label>
+                <div class="col-sm-8">
+                    <input name="sortNum" class="form-control" value="0" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'catStatus_' + dict.dictCode}" name="catStatus" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'catStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <script th:inline="javascript">
+        var prefix = ctx + "portal/category"
+        $("#form-category-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-category-add').serialize());
+            }
+        }
+
+        $(".file-upload").fileinput({
+            uploadUrl: ctx + 'common/upload',
+            maxFileCount: 1,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+
+        /*文章分类-新增-选择父文章分类树*/
+        function selectCategoryTree() {
+            var options = {
+                title: '文章分类选择',
+                width: "380",
+                url: prefix + "/selectCategoryTree/" + $("#treeId").val(),
+                callBack: doSubmit
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            $.modal.close(index);
+        }
+    </script>
+</body>
+</html>

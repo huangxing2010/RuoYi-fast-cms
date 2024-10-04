@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.article.mapper.PortalArticleMapper">
+    
+    <resultMap type="PortalArticle" id="PortalArticleResult">
+        <result property="articleId"    column="article_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="articleTitle"    column="article_title"    />
+        <result property="subhead"    column="subhead"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="source"    column="source"    />
+        <result property="description"    column="description"    />
+        <result property="thumbnail"    column="thumbnail"    />
+        <result property="content"    column="content"    />
+        <result property="artType"    column="art_type"    />
+        <result property="artSkip"    column="art_skip"    />
+        <result property="degreeNum"    column="degree_num"    />
+        <result property="isPush"    column="is_push"    />
+        <result property="isSlide"    column="is_slide"    />
+        <result property="isTop"    column="is_top"    />
+        <result property="checkStatus"    column="check_status"    />
+        <result property="isIssue"    column="is_issue"    />
+        <result property="showStatus"    column="show_status"    />
+        <result property="isGrant"    column="is_grant"    />
+        <result property="grantId"    column="grant_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPortalArticleVo">
+        select article_id, dept_id, article_title, subhead, category_id, source, description, thumbnail, content, art_type, art_skip, degree_num, is_push, is_slide, is_top, check_status, is_issue, show_status, is_grant, grant_id, remark, create_by, create_time, update_by, update_time from sys_portal_article
+    </sql>
+
+    <select id="selectPortalArticleList" parameterType="PortalArticle" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>  
+            <if test="articleTitle != null  and articleTitle != ''"> and article_title like concat('%', #{articleTitle}, '%')</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="artType != null  and artType != ''"> and art_type = #{artType}</if>
+            <if test="isPush != null  and isPush != ''"> and is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''"> and is_slide = #{isSlide}</if>
+            <if test="isTop != null  and isTop != ''"> and is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''"> and check_status = #{checkStatus}</if>
+            <if test="isIssue != null  and isIssue != ''"> and is_issue = #{isIssue}</if>
+            <if test="showStatus != null  and showStatus != ''"> and show_status = #{showStatus}</if>
+            <if test="isGrant != null  and isGrant != ''"> and is_grant = #{isGrant}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectPortalArticleLists" parameterType="Long" resultMap="PortalArticleResult">
+        select * from sys_portal_article where dept_id in
+        <foreach item="articleId" collection="array" open="(" separator="," close=")">
+            #{articleId}
+        </foreach>
+        and art_type = '0'
+        and show_status = '0'
+        order by create_time desc
+    </select>
+    
+    <select id="selectPortalArticleByArticleId" parameterType="Long" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        where article_id = #{articleId}
+    </select>
+
+    <!--首页分类栏目文章查询，map 参数-->
+   <!-- <select id="selectHomeArticleByCategoryId" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        where category_id= #{categoryId}
+        and is_issue = #{isIssue}
+        and art_type = #{artType}
+        and show_status = #{showStatus}
+        order by create_time desc
+        limit #{limit}
+    </select>-->
+
+    <!--首页栏目文章查询-->
+    <select id="selectHomeArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>
+        <if test="categoryId != null ">category_id in
+            <foreach item="categoryId" index="index" collection="categoryId" open="(" separator="," close=")">
+                #{categoryId}
+            </foreach>
+        </if>
+        <if test="deptId != null ">and dept_id = #{deptId}</if>
+        <if test="artType != null  and artType != ''">and art_type = #{artType}</if>
+        <if test="isPush != null  and isPush != ''">and is_push = #{isPush}</if>
+        <if test="isSlide != null  and isSlide != ''">and is_slide = #{isSlide}</if>
+        <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
+        <if test="isTop != null  and isTop != ''">and is_top = #{isTop}</if>
+        <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
+        <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
+        <if test="createBy != null  and createBy != ''">and create_by = #{createBy}</if>
+        </where>
+        order by create_time desc
+        limit #{limit}
+    </select>
+
+    <!--首页部门文章查询-->
+    <select id="selectDeptArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>
+            <if test="deptId != null ">dept_id in
+                <foreach item="deptId" index="index" collection="deptId" open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
+            </if>
+            <if test="artType != null  and artType != ''">and art_type = #{artType}</if>
+            <if test="isPush != null  and isPush != ''">and is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''">and is_slide = #{isSlide}</if>
+            <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
+            <if test="isTop != null  and isTop != ''">and is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
+            <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
+            <if test="createBy != null  and createBy != ''">and create_by = #{createBy}</if>
+        </where>
+        order by create_time desc
+        limit #{limit}
+    </select>
+
+<!--文章统计-->
+    <select id="selectArticleCount" parameterType="java.util.Map" resultType="Integer">
+        select count(1) from sys_portal_article
+        <where>
+            <if test="deptId != null  and deptId != ''">and dept_id = #{deptId}</if>
+            <if test="artType != null  and artType != ''">and art_type = #{artType}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
+            <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
+            <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
+        </where>
+    </select>
+        
+    <insert id="insertPortalArticle" parameterType="PortalArticle" useGeneratedKeys="true" keyProperty="articleId">
+        insert into sys_portal_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleTitle != null and articleTitle != ''">article_title,</if>
+            <if test="subhead != null">subhead,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="source != null">source,</if>
+            <if test="description != null">description,</if>
+            <if test="thumbnail != null">thumbnail,</if>
+            <if test="content != null">content,</if>
+            <if test="artType != null">art_type,</if>
+            <if test="artSkip != null">art_skip,</if>
+            <if test="degreeNum != null">degree_num,</if>
+            <if test="isPush != null">is_push,</if>
+            <if test="isSlide != null">is_slide,</if>
+            <if test="isTop != null">is_top,</if>
+            <if test="checkStatus != null">check_status,</if>
+            <if test="isIssue != null">is_issue,</if>
+            <if test="showStatus != null">show_status,</if>
+            <if test="isGrant != null">is_grant,</if>
+            <if test="grantId != null">grant_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleTitle != null and articleTitle != ''">#{articleTitle},</if>
+            <if test="subhead != null">#{subhead},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="source != null">#{source},</if>
+            <if test="description != null">#{description},</if>
+            <if test="thumbnail != null">#{thumbnail},</if>
+            <if test="content != null">#{content},</if>
+            <if test="artType != null">#{artType},</if>
+            <if test="artSkip != null">#{artSkip},</if>
+            <if test="degreeNum != null">#{degreeNum},</if>
+            <if test="isPush != null">#{isPush},</if>
+            <if test="isSlide != null">#{isSlide},</if>
+            <if test="isTop != null">#{isTop},</if>
+            <if test="checkStatus != null">#{checkStatus},</if>
+            <if test="isIssue != null">#{isIssue},</if>
+            <if test="showStatus != null">#{showStatus},</if>
+            <if test="isGrant != null">#{isGrant},</if>
+            <if test="grantId != null">#{grantId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalArticle" parameterType="PortalArticle">
+        update sys_portal_article
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="articleTitle != null and articleTitle != ''">article_title = #{articleTitle},</if>
+            <if test="subhead != null">subhead = #{subhead},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="thumbnail != null">thumbnail = #{thumbnail},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="artType != null">art_type = #{artType},</if>
+            <if test="artSkip != null">art_skip = #{artSkip},</if>
+            <if test="degreeNum != null">degree_num = #{degreeNum},</if>
+            <if test="isPush != null">is_push = #{isPush},</if>
+            <if test="isSlide != null">is_slide = #{isSlide},</if>
+            <if test="isTop != null">is_top = #{isTop},</if>
+            <if test="checkStatus != null">check_status = #{checkStatus},</if>
+            <if test="isIssue != null">is_issue = #{isIssue},</if>
+            <if test="showStatus != null">show_status = #{showStatus},</if>
+            <if test="isGrant != null">is_grant = #{isGrant},</if>
+            <if test="grantId != null">grant_id = #{grantId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where article_id = #{articleId}
+    </update>
+
+    <delete id="deletePortalArticleByArticleId" parameterType="Long">
+        delete from sys_portal_article where article_id = #{articleId}
+    </delete>
+
+    <delete id="deletePortalArticleByArticleIds" parameterType="String">
+        delete from sys_portal_article where article_id in 
+        <foreach item="articleId" collection="array" open="(" separator="," close=")">
+            #{articleId}
+        </foreach>
+    </delete>
+
+</mapper>

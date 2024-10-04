@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增文章内容')" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <div>
+        <form class="form-horizontal m" id="form-article-add">
+            <!-- 左侧-->
+            <div class="col-lg-9">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label is-required">文章标题：</label>
+                    <div class="col-sm-10">
+                        <input name="articleTitle" class="form-control" type="text" placeholder="请输入标题" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">副标题：</label>
+                    <div class="col-sm-10">
+                        <input name="subhead" class="form-control" placeholder="请输入副标题" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label is-required">栏目分类：</label>
+                    <div class="col-sm-6">
+                        <select class="form-control " data-placeholder="请选择导航" id="categoryId" name="categoryId" required>
+                            <option value="">请选择分类</option>
+                            <block th:each="category:${categoryList}">
+                                <option
+                                        th:if="${#lists.isEmpty(category.children) && category.pid ==0}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:selected="${portalArticle?.categoryId == category.id}"
+                                ></option>
+                                <optgroup th:label="${category.name}" th:unless="${#lists.isEmpty(category.children)}">
+                                    <option th:each="child: ${category.children}"
+                                            th:value="${child.id}"
+                                            th:text="${child.name}"></option>
+                                </optgroup>
+                            </block>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-2 control-label">文章来源：</label>
+                    <div class="col-sm-2">
+                        <input name="source" class="form-control" placeholder="请输入文章来源" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">描述：</label>
+                    <div class="col-sm-10">
+                        <textarea name="description" class="form-control" placeholder="请输入描述"></textarea>
+                    </div>
+                </div>
+                <div class="form-group" id="isShow">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label is-required">内容：</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" class="form-control" name="content">
+                            <div class="summernote" id="content"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">跳转地址：</label>
+                    <div class="col-sm-10">
+                        <input name="artSkip" class="form-control" type="text" placeholder="请输入跳转地址">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注：</label>
+                    <div class="col-sm-10">
+                        <textarea name="remark" class="form-control" placeholder="请输入备注"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label class="col-sm-12 control-label">缩略图：</label>
+                    <div class="col-sm-12">
+                        <input type="hidden" name="thumbnail">
+                        <div class="file-loading">
+                            <input class="form-control file-upload" id="thumbnail" name="file" type="file">
+                        </div>
+                    </div>
+                </div>
+                <!--
+                               <div class="form-group">
+                                   <label class="col-sm-3 control-label">是否推荐：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_article_yes')}">
+                                           <input type="radio" th:id="${'isPush_' + dict.dictCode}" name="isPush" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'isPush_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label class="col-sm-3 control-label">是否幻灯：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_article_yes')}">
+                                           <input type="radio" th:id="${'isSlide_' + dict.dictCode}" name="isSlide" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'isSlide_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label class="col-sm-3 control-label">是否置顶：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_article_yes')}">
+                                           <input type="radio" th:id="${'isTop_' + dict.dictCode}" name="isTop" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'isTop_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>
+                              <div class="form-group">
+                                   <label class="col-sm-3 control-label">审核状态：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_check_status')}">
+                                           <input type="radio" th:id="${'checkStatus_' + dict.dictCode}" name="checkStatus" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'checkStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label class="col-sm-3 control-label">显示状态：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                                           <input type="radio" th:id="${'showStatus_' + dict.dictCode}" name="showStatus" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'showStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label class="col-sm-3 control-label">是否签发：</label>
+                                   <div class="col-sm-8">
+                                       <div class="radio-box" th:each="dict : ${@dict.getType('sys_article_yes')}">
+                                           <input type="radio" th:id="${'isGrant_' + dict.dictCode}" name="isGrant" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                                           <label th:for="${'isGrant_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                       </div>
+                                   </div>
+                               </div>-->
+            </div>
+        </form>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                        class="fa fa-check"></i>保 存
+                </button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <th:block th:include="include :: summernote-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "portal/specially"
+        $("#form-article-add").validate({
+            focusCleanup: true
+        });
+        ////报刊 id=25，杂志 id=26，选中编辑时候隐藏
+        $('#categoryId').on('change', function() {
+            var value = $(this).val();
+            //隐藏内容表单
+            if(value == '25' || value == '26'){
+                $('#isShow').hide();
+            }else{
+                $('#isShow').show();
+            }
+        });
+
+
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                var data = $("#form-article-add").serializeArray();
+                var tags = $.form.selectSelects("tag");
+                data.push({"name": "tags", "value": tags});
+                $.operate.saveTab(prefix + "/add", data);
+                // $.operate.save(prefix + "/add", $('#form-article-add').serialize());
+            }
+        }
+
+        $(".file-upload").fileinput({
+            uploadUrl: ctx + 'common/upload',
+            maxFileCount: 1,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+
+        $(function() {
+            $('.summernote').summernote({
+                lang: 'zh-CN',
+                height: 500,
+                dialogsInBody: true,
+                callbacks: {
+                    onChange: function(contents, $edittable) {
+                        $("input[name='" + this.id + "']").val(contents);
+                    },
+                    onImageUpload: function(files) {
+                        var obj = this;
+                    	var data = new FormData();
+                    	data.append("file", files[0]);
+                    	$.ajax({
+                            type: "post",
+                            url: ctx + "common/upload",
+                    		data: data,
+                    		cache: false,
+                    		contentType: false,
+                    		processData: false,
+                    		dataType: 'json',
+                    		success: function(result) {
+                    		    if (result.code == web_status.SUCCESS) {
+                    		        $('#' + obj.id).summernote('insertImage', result.url);
+                    		    } else {
+                    		        $.modal.alertError(result.msg);
+                    		    }
+                    		},
+                    		error: function(error) {
+                    		    $.modal.alertWarning("图片上传失败。");
+                    		}
+                    	});
+                    }
+                }
+            });
+        });
+
+
+
+    </script>
+
+</body>
+</html>

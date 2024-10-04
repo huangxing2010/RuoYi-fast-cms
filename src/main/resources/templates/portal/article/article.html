@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('文章内容列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+
+    <!--         prefix-->
+
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>文章标题：</label>
+                            <input type="text" name="articleTitle"/>
+                        </li>
+                        <li>
+                            <label>栏目分类：</label>
+                            <select class="form-control " data-placeholder="请选择导航" id="categoryId" name="categoryId">
+                                <option value="">请选择分类</option>
+                                <block th:each="category:${categoryList}">
+                                    <option
+                                            th:if="${#lists.isEmpty(category.children) && category.pid ==0}"
+                                            th:value="${category.id}"
+                                            th:text="${category.name}"
+                                            th:selected="${portalArticle?.categoryId == category.id}"
+                                    ></option>
+                                    <optgroup th:label="${category.name}" th:unless="${#lists.isEmpty(category.children)}">
+                                        <option th:each="child: ${category.children}"
+                                                th:value="${child.id}"
+                                                th:text="${child.name}"></option>
+                                    </optgroup>
+                                </block>
+                            </select>
+                        </li>
+                        <li>
+                            <label>是否推荐：</label>
+                            <select name="isPush" th:with="type=${@dict.getType('sys_article_yes')}">
+                                <option value="">未选</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>是否幻灯：</label>
+                            <select name="isSlide" th:with="type=${@dict.getType('sys_article_yes')}">
+                                <option value="">未选</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>是否置顶：</label>
+                            <select name="isTop" th:with="type=${@dict.getType('sys_article_yes')}">
+                                <option value="">未选</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="portal:article:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.editTab()"
+               shiro:hasPermission="portal:article:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="portal:article:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+           <!-- <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="portal:article:export">
+                <i class="fa fa-download"></i> 导出
+            </a>-->
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('portal:article:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('portal:article:remove')}]];
+    var artTypeDatas = [[${@dict.getType('sys_article_type')}]];
+    var isPushDatas = [[${@dict.getType('sys_article_yes')}]];
+    var isSlideDatas = [[${@dict.getType('sys_article_yes')}]];
+    var isTopDatas = [[${@dict.getType('sys_article_yes')}]];
+    var checkStatusDatas = [[${@dict.getType('sys_check_status')}]];
+    var showStatusDatas = [[${@dict.getType('sys_show_hide')}]];
+    var isGrantDatas = [[${@dict.getType('sys_article_yes')}]];
+    var isIssueDatas = [[${@dict.getType('sys_article_show')}]];
+    var prefix = ctx + "portal/article";
+    //后端赋值,当前登录用户
+    var deptID = [[${deptID}]];
+    //后端赋值,当前登录用户
+    var loginUserName = [[${loginUserName}]];
+
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "文章内容",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'articleId',
+                    title: 'ID',
+                    visible: true
+                },
+                {
+                    field: 'articleTitle',
+                    title: '文章标题'
+                },
+                {
+                    field: 'categoryId',
+                    title: '栏目分类',
+                    formatter: function (value, row, index) {
+                        if (value > 0) {
+                            let targetElement = 'cat' + row.articleId
+                            $.ajax({
+                                type: "get",
+                                url: prefix + "/getCategory/" + value,
+                                datatype: 'json',
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    $('#' + targetElement).text(data.cname);
+                                },
+                                error: function (error) {
+                                    console.log('Error: ' + error);
+                                }
+                            })
+                            return '<span id="' + targetElement + '"  style="color: #2b2b2b">0</span>'
+                        }
+                    }
+                },
+                {
+                    field: 'source',
+                    title: '文章来源'
+                },
+                {
+                    field: 'thumbnail',
+                    title: '缩略图',
+                    formatter: function (value, row, index) {
+                        if (value == null || value == '') {
+                            return '<span style="color: #CCCCCC">无缩略图</span>'
+                        } else {
+                            return '<img width="40" height="40" src="' + value + '"/>'
+                        }
+                    }
+                },
+               /* {
+                    field: 'artType',
+                    title: '类型',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(artTypeDatas, value);
+                    }
+                },*/
+                {
+                    field: 'degreeNum',
+                    title: '访问次数'
+                },
+                {
+                    field: 'isPush',
+                    title: '是否推荐',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isPushDatas, value);
+                    }
+                },
+                {
+                    field: 'isSlide',
+                    title: '是否幻灯',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isSlideDatas, value);
+                    }
+                },
+                {
+                    field: 'isTop',
+                    title: '是否置顶',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isTopDatas, value);
+                    }
+                },
+                {
+                    field: 'checkStatus',
+                    title: '审核状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(checkStatusDatas, value);
+                    }
+                },
+                {
+                    field: 'isIssue',
+                    title: '发布状态',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isIssueDatas, value);
+                    }
+                },
+                /*{
+                    field: 'isGrant',
+                    title: '是否签发',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isGrantDatas, value);
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },*/
+                {
+                    field: 'createBy',
+                    title: '作者'
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        //县局以上部门拥有审核功能，且文章未审核
+                        if (row.checkStatus == '0' && (deptID == 100 || deptID == 101)) {
+                            actions.push('<a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="$.operate.edit(\'check/' + row.articleId + '\')"><i class="fa fa-retweet"></i>审核</a> ');
+                        }
+                        // 县局以上部门拥有再审功能，且文章已审核
+                        if (row.checkStatus == '2' && (deptID == 100 || deptID == 101)) {
+                            actions.push('<a class="btn btn-info btn-xs" href="javascript:void(0)" onclick="$.operate.edit(\'check/' + row.articleId + '\')"><i class="fa fa-bug"></i>再审</a> ');
+                        }
+                        // 县局以上部门拥有发布功能，且文章已审核
+                        if (row.checkStatus == '1' && (deptID == 100 || deptID == 101)) {
+                            // 已发布
+                            if(row.isIssue == '1'){
+                                actions.push('<a class="btn btn-info btn-xs" href="javascript:void(0)" onclick="$.operate.edit(\'publish/' + row.articleId + '\')"><i class="fa fa-check"></i>发布</a> ');
+                            }else {  // 未发布
+                                actions.push('<a class="btn btn-warning btn-xs" href="javascript:void(0)" onclick="$.operate.edit(\'publish/' + row.articleId + '\')"><i class="fa fa-edit"></i>发布</a> ');
+                            }
+                        }
+                        //只有创建者可以编辑
+                        if (row.createBy == loginUserName) {
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.articleId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        }
+                        // 只有县局以上部门及本人可以删除
+                        if(row.createBy == loginUserName || deptID == 100 || deptID == 101){
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.articleId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        }
+                        // actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.articleId + '\')"><i class="fa fa-edit"></i>签发</a> ');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    function button0pen() {
+        $.modal.open('添加用户', prefix + "/form");
+    }
+
+
+</script>
+
+
+</body>
+</html>
