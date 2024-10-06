@@ -1,7 +1,7 @@
 
 
 <p align="center">
-	<img alt="logo" src="https://raw.githubusercontent.com/huangxing2010/RuoYi-fast-cms/refs/heads/main/public/demoImg/创意.png">
+	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/%E5%88%9B%E6%84%8F.png">
 </p>
 
 
@@ -14,7 +14,7 @@
 
 
 ## 系统介绍
-一直想做一款java网站管理系统，曾经用过的各种PHP CMS 用于企业官网或单位门户网站还算轻便灵活，但是发现高端网站开发总不能随心所欲，为了满足政务服务平台集约化站群系统定制化需求，结合多年网站设计开发经验由云而生。
+一直想做一款java 网站管理系统，曾经用过的各种PHP CMS 用于企业官网或单位门户网站还算轻便灵活，但是发现高端网站开发总不能随心所欲，为了满足政务服务平台集约化站群系统定制化需求，结合多年网站设计开发经验由云而生。
 本项目基于RuoYi-fast二次开发，网站模版使用thymeleaf+bootstrap开发，多套风格模板，可自由飞翔。
 
 ## 环境要求
@@ -62,8 +62,12 @@
 - [x] 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 
 ## 在线体验
-* 后端地址：即将发布
-* 前端地址：即将发布
+
+* 模版 01：http://web-demo.system-code.vip/red/home
+* 模版 02：http://web-demo.system-code.vip/green/home
+* 
+* 后台地址：http://web-demo.system-code.vip/login
+* 后台账号：ry/admin123
 
 ## 安装步骤
 * 1、git 源码；
@@ -79,14 +83,41 @@
 > 声明：网站模版没有开源，请购买授权，购买地址：http://www.xnqys.com
 > 
 > 支出：陆续发布精致的网站模版，欢迎大家选购。
-> 
-> 宗旨：用实例说话，因为专业、所以卓越，因为卓越、所以支付
 
-## 模版演示
-* 即将发布...
 
-## 后台演示
-* 即将发布...
+## 模版预览图
+<table>
+    <tr>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo1.jpg"/></td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo2.jpg"/></td>
+    </tr>
+<tr>
+        <td>陆续发布...</td>
+        <td>陆续发布...</td>
+    </tr>
+</table>
+
+
+## 后台预览图
+
+<table>
+    <tr>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/001.png"/></td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/002.png"/></td>
+    </tr>
+<tr>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/002.png"/></td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/003.png"/></td>
+    </tr>
+<tr>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/005.png"/></td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/006.png"/></td>
+    </tr>
+<tr>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/007.png"/></td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/008.png"/></td>
+    </tr>
+</table>
 
 ## 特别鸣谢
 * RuoYi
