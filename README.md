@@ -14,7 +14,7 @@
 
 
 ## 系统介绍
-一直想做一款java 网站管理系统，曾经用过的各种PHP CMS 用于企业官网或单位门户网站还算轻便灵活，但是发现高端网站开发总不能随心所欲，为了满足政务服务平台集约化站群系统定制化需求，结合多年网站设计开发经验由云而生。
+一直想做一款Java CMS 网站管理系统，曾经用过各种内容管理系统开发企业官网或单位门户网站，但是发现开发高端大气官网总不能随心所欲，为了满足政务服务平台及站群系统定制化需求，结合多年网站设计开发经验由云而生。
 本项目基于RuoYi-fast二次开发，网站模版使用thymeleaf+bootstrap开发，多套风格模板，可自由飞翔。
 
 ## 环境要求
@@ -61,13 +61,7 @@
 - [x] 在线构建器：拖动表单元素生成相应的HTML代码。
 - [x] 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 
-## 在线体验
 
-* 模版 01：http://web-demo.system-code.vip/red/home
-* 模版 02：http://web-demo.system-code.vip/green/home
-* 
-* 后台地址：http://web-demo.system-code.vip/login
-* 后台账号：ry/admin123
 
 ## 安装步骤
 * 1、git 源码；
@@ -79,11 +73,15 @@
 * 7、配置日志存放路径 <property name="log.path" value="/public/logs" />
 * 8、启动项目；
 
-## 网站模板支出
-> 声明：网站模版没有开源，请购买授权，购买地址：http://www.xnqys.com
-> 
-> 支出：陆续发布精致的网站模版，欢迎大家选购。
 
+
+## 在线体验
+
+* 模版 01：http://web-demo.system-code.vip/red/home
+* 模版 02：http://web-demo.system-code.vip/green/home
+*
+* 后台地址：http://web-demo.system-code.vip/login
+* 后台账号：ry/admin123
 
 ## 模版预览图
 <table>
@@ -92,10 +90,15 @@
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo2.jpg"/></td>
     </tr>
 <tr>
-        <td>陆续发布...</td>
-        <td>陆续发布...</td>
+        <td>陆续发布，敬请期待...</td>
+        <td>陆续发布，敬请期待...</td>
     </tr>
 </table>
+
+## 网站模板支出
+> 声明：网站模版没有开源，请购买授权，购买地址：http://www.xnqys.com
+> 
+> 支出：陆续发布精致的网站模版，欢迎大家选购。
 
 
 ## 后台预览图
