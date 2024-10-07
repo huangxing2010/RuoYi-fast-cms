@@ -6,7 +6,7 @@
 
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
-<h4 align="center">基于RuoYi v4.7.9开发的轻量级Java网站内容管理系统</h4>
+<h4 align="center">基于RuoYi-fast v4.7.9开发的轻量级Java网站内容管理系统</h4>
 <p align="center">
 	<a href="https://gitee.com/y_project/RuoYi"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
 	<a href="https://gitee.com/y_project/RuoYi/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
@@ -14,7 +14,7 @@
 
 
 ## 系统介绍
-一直想做一款Java CMS 网站管理系统，曾经用过各种内容管理系统开发企业官网或单位门户网站，但是发现开发高端大气官网总不能随心所欲，为了满足政务服务平台及站群系统定制化需求，结合多年网站设计开发经验由云而生。
+* 一直想做一款Java CMS 网站管理系统，曾经用过各种内容管理系统开发企业官网或单位门户网站，但是发现开发高端大气官网总不能随心所欲，为了满足政务服务平台及站群系统定制化需求，结合多年网站设计开发经验由云而生。
 本项目基于RuoYi-fast二次开发，网站模版使用thymeleaf+bootstrap开发，多套风格模板，可自由飞翔。
 
 ## 环境要求
@@ -96,7 +96,7 @@
 </table>
 
 ## 网站模板支出
-> 声明：网站模版没有开源，请购买授权，购买地址：http://www.xnqys.com
+> 声明：网站模版没有开源，请购买授权，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">个人授权版</a>
 > 
 > 支出：陆续发布精致的网站模版，欢迎大家选购。
 
