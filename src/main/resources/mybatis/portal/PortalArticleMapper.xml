@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isGrant != null  and isGrant != ''"> and is_grant = #{isGrant}</if>
             <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
         </where>
-        order by create_time desc
+        order by update_time desc
     </select>
 
     <select id="selectPortalArticleLists" parameterType="Long" resultMap="PortalArticleResult">
@@ -113,14 +113,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     #{deptId}
                 </foreach>
             </if>
-            <if test="artType != null  and artType != ''">and art_type = #{artType}</if>
             <if test="isPush != null  and isPush != ''">and is_push = #{isPush}</if>
             <if test="isSlide != null  and isSlide != ''">and is_slide = #{isSlide}</if>
             <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
             <if test="isTop != null  and isTop != ''">and is_top = #{isTop}</if>
             <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
             <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
-            <if test="createBy != null  and createBy != ''">and create_by = #{createBy}</if>
+            <if test="createBy != null  and createBy != ''">and create_by = #{createBy} </if>
+
         </where>
         order by create_time desc
         limit #{limit}
