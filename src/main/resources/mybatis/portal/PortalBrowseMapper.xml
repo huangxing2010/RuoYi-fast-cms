@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.browse.mapper.PortalBrowseMapper">
+    
+    <resultMap type="PortalBrowse" id="PortalBrowseResult">
+        <result property="browseId"    column="browse_id"    />
+        <result property="browseType"    column="browse_type"    />
+        <result property="browseJson"    column="browse_json"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectPortalBrowseVo">
+        select browse_id, browse_type, browse_json, remark, create_time from sys_portal_browse
+    </sql>
+
+    <select id="selectPortalBrowseList" parameterType="PortalBrowse" resultMap="PortalBrowseResult">
+        <include refid="selectPortalBrowseVo"/>
+        <where>  
+            <if test="browseType != null  and browseType != ''"> and browse_type = #{browseType}</if>
+            <if test="browseJson != null  and browseJson != ''"> and browse_json like concat('%', #{browseJson}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectPortalBrowseByParam" parameterType="java.util.Map" resultMap="PortalBrowseResult">
+        <include refid="selectPortalBrowseVo"/>
+        where browse_type = #{browseType}
+        and date_format(create_time,'%y%m%d') >= date_format(#{beginTime},'%y%m%d')
+        and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </select>
+    
+    <select id="selectPortalBrowseByBrowseId" parameterType="Long" resultMap="PortalBrowseResult">
+        <include refid="selectPortalBrowseVo"/>
+        where browse_id = #{browseId}
+    </select>
+
+    <insert id="insertPortalBrowse" parameterType="PortalBrowse" useGeneratedKeys="true" keyProperty="browseId">
+        insert into sys_portal_browse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="browseType != null">browse_type,</if>
+            <if test="browseJson != null">browse_json,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="browseType != null">#{browseType},</if>
+            <if test="browseJson != null">#{browseJson},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalBrowse" parameterType="PortalBrowse">
+        update sys_portal_browse
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="browseType != null">browse_type = #{browseType},</if>
+            <if test="browseJson != null">browse_json = #{browseJson},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where browse_id = #{browseId}
+    </update>
+
+    <delete id="deletePortalBrowseByBrowseId" parameterType="Long">
+        delete from sys_portal_browse where browse_id = #{browseId}
+    </delete>
+
+    <delete id="deletePortalBrowseByBrowseIds" parameterType="String">
+        delete from sys_portal_browse where browse_id in 
+        <foreach item="browseId" collection="array" open="(" separator="," close=")">
+            #{browseId}
+        </foreach>
+    </delete>
+
+</mapper>
