@@ -1,7 +1,19 @@
 package com.ruoyi.project.portal.browse.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.utils.AddressUtils;
+import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.shiro.web.filter.LogoutFilter;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +41,7 @@ import com.ruoyi.framework.web.page.TableDataInfo;
 @RequestMapping("/portal/browse")
 public class PortalBrowseController extends BaseController
 {
+    private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
     private String prefix = "portal/browse";
 
     @Autowired
@@ -96,9 +109,39 @@ public class PortalBrowseController extends BaseController
     @GetMapping("/edit/{browseId}")
     public String edit(@PathVariable("browseId") Long browseId, ModelMap mmap)
     {
-        PortalBrowse portalBrowse = portalBrowseService.selectPortalBrowseByBrowseId(browseId);
-        mmap.put("portalBrowse", portalBrowse);
-        return prefix + "/edit";
+
+            PortalBrowse portalBrowse = portalBrowseService.selectPortalBrowseByBrowseId(browseId);
+            JSONArray objects = JSON.parseArray(portalBrowse.getBrowseJson());
+            Map<String, Object> list = new HashMap<>();
+            List<Object> browList = new ArrayList<>();
+            for (int i = 0; i < objects.size(); i++) {
+                JSONObject obj = objects.getJSONObject(i);
+                Map<String, Object> numbers = new HashMap<>();
+
+
+                Object ip = obj.get("ip");
+                numbers.put("ip", ip);
+                //String ipAdd = AddressUtils.getRealAddressByIP(obj.getString("ip"));
+                //numbers.put("ipAdd", ipAdd == null || ipAdd == "XX XX" ? "未知" : ipAdd);
+                Object number = obj.get("number");
+                numbers.put("number", number);
+                browList.add(numbers);
+            }
+
+
+            list.put("browList", browList);
+            list.put("browseType", portalBrowse.getBrowseType());
+            list.put("remark", portalBrowse.getRemark());
+            list.put("createTime", portalBrowse.getCreateTime());
+            list.put("ipCount", objects.size());
+
+
+            mmap.put("portalBrowse", list);
+            return prefix + "/edit";
+
+
+
+
     }
 
     /**

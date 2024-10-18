@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="browseType != null  and browseType != ''"> and browse_type = #{browseType}</if>
             <if test="browseJson != null  and browseJson != ''"> and browse_json like concat('%', #{browseJson}, '%')</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectPortalBrowseByParam" parameterType="java.util.Map" resultMap="PortalBrowseResult">

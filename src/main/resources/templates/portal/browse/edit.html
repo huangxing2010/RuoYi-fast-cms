@@ -5,48 +5,33 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-browse-edit" th:object="${portalBrowse}">
-            <input name="browseId" th:field="*{browseId}" type="hidden">
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">站点类型：</label>
-                    <div class="col-sm-8">
-                        <select name="browseType" class="form-control" th:with="type=${@dict.getType('sys_website_type')}">
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{browseType}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">浏览统计：</label>
-                    <div class="col-sm-8">
-                        <input name="browseJson" th:field="*{browseJson}" class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">备注：</label>
-                    <div class="col-sm-8">
-                        <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
-                    </div>
-                </div>
-            </div>
-        </form>
+
+
+        <div class="col-xs-12">ip访问量：[[${portalBrowse.ipCount}]]</div>
+        <div class="col-xs-12">
+            <table class="table">
+                <caption>访问量分布表</caption>
+                <thead>
+                <tr>
+                    <th width="180">IP</th>
+                    <th >PV</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${portalBrowse.browList}">
+                    <td>[[${item.ip}]]</td>
+                    <td>[[${item.number}]]</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
     </div>
     <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var prefix = ctx + "portal/browse";
-        $("#form-browse-edit").validate({
-            focusCleanup: true
-        });
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-browse-edit').serialize());
-            }
-        }
-    </script>
 </body>
 </html>
