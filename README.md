@@ -70,24 +70,37 @@
 
 
 ## 安装步骤
-* 1、git 源码；
-* 2、导入 idea , 自动下载依赖；
-* 3、/src/main/resources/application-druid.yml 修改为自己的数据库、用户名、密码、端口；
-* 4、创建数据库；
-* 5、导入数据库 /public/sql/ruoyi-fast-cms.sql；
-* 6、配置文件上传路径  profile: /public/uploadPath
-* 7、配置日志存放路径 <property name="log.path" value="/public/logs" />
-* 8、启动项目；
+1、git 拉取源码；
+```agsl
+git clone https://gitee.com/y_project/RuoYi-fast-cms.git
+```
+2、导入 idea , 配置 maven 自动下载依赖；
+
+3、/src/main/resources/application-druid.yml 修改为自己的数据库、用户名、密码、端口；
+```agsl
+ master:
+   url: jdbc:mysql://localhost:3306/ruoyi-fast-cms?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+   username: root
+   password: root
+```
+4、创建数据库；
+
+5、导入数据 /public/sql/ruoyi-fast-cms.sql；
+
+6、配置文件上传路径  profile: /public/uploadPath
+
+7、配置日志存放路径 /RuoYi-fast-cms/src/main/resources/logback.xml
+```agsl
+<!-- 日志存放路径 -->
+<property name="log.path" value="/wwwroot/ruoyi-fast-cms/public/logs" />
+```
+8、启动项目；
+
+9、访问 http://localhost:8080/login 登录。
 
 
 
-## 在线体验
 
-* 模版 01：http://web-demo.system-code.vip/red/home
-* 模版 02：http://web-demo.system-code.vip/green/home
-*
-* 后台地址：http://web-demo.system-code.vip/login
-* 后台账号：ry/admin123
 
 ## 模版预览图
 <table>
@@ -96,13 +109,24 @@
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo2.jpg"/></td>
     </tr>
 <tr>
-        <td>陆续发布，敬请期待...</td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo3.jpg"/></td>
         <td>陆续发布，敬请期待...</td>
     </tr>
 </table>
 
+## 在线体验
+
+* 模板 01：http://web-demo.system-code.vip/red/home
+* 模板 02：http://web-demo.system-code.vip/green/home
+* 模板 03：http://web-demo.system-code.vip/blue/home
+* 模板陆续发布...
+* 后台地址：http://web-demo.system-code.vip/login
+* 后台账号：ry/admin123
+
 ## 网站模板支出
-> 声明：网站模版没有开源，请购买授权，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">个人授权版</a>
+> 声明：PC网站模版没有开源，请购买授权，仅需 ¥499元，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">PC网站模版</a>； 购买后，可永久免费使用；
+> 
+> 提供远程部署及技术咨询服务；
 > 
 > 支出：陆续发布精致的网站模版，欢迎大家选购。
 
