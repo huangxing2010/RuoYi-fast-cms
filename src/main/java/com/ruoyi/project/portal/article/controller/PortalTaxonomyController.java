@@ -135,5 +135,17 @@ public class PortalTaxonomyController extends BaseController
         return ztrees;
     }
 
+    /**
+     * 删除专题分类
+     */
+    @RequiresPermissions("portal:category:remove")
+    @Log(title = "文章分类", businessType = BusinessType.DELETE)
+    @GetMapping("/remove/{categoryId}")
+    @ResponseBody
+    public AjaxResult remove(@PathVariable("categoryId") Long categoryId)
+    {
+        return toAjax(portalCategoryService.deletePortalCategoryByCategoryId(categoryId));
+    }
+
 
 }
