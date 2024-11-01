@@ -61,7 +61,7 @@ public class DeptServiceImpl implements IDeptService
     /**
      * 查询部门管理树（排除下级）
      * 
-     * @param deptId 部门ID
+     * @param dept 部门ID
      * @return 所有部门信息
      */
     @Override
