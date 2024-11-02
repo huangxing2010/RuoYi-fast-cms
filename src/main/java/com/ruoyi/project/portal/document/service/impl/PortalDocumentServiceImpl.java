@@ -2,6 +2,9 @@ package com.ruoyi.project.portal.document.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.security.AESEncrypter;
+import com.ruoyi.common.utils.security.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.portal.document.mapper.PortalDocumentMapper;
@@ -30,7 +33,12 @@ public class PortalDocumentServiceImpl implements IPortalDocumentService
     @Override
     public PortalDocument selectPortalDocumentByDocId(Long docId)
     {
-        return portalDocumentMapper.selectPortalDocumentByDocId(docId);
+        PortalDocument portalDocument = portalDocumentMapper.selectPortalDocumentByDocId(docId);
+        if(portalDocument.getIsLock().equals("1") && StringUtils.isNotEmpty(portalDocument.getPassword())) {
+            //解密
+            portalDocument.setPassword(decryptPassword(portalDocument.getPassword()));
+        }
+        return portalDocument;
     }
 
     /**
@@ -54,7 +62,12 @@ public class PortalDocumentServiceImpl implements IPortalDocumentService
     @Override
     public int insertPortalDocument(PortalDocument portalDocument)
     {
+        portalDocument.setCreateBy(ShiroUtils.getLoginName());
         portalDocument.setCreateTime(DateUtils.getNowDate());
+        //加密算法必须放到 try catch 中
+        if(portalDocument.getIsLock().equals("1") && StringUtils.isNotEmpty(portalDocument.getPassword())){
+            portalDocument.setPassword(encryptPassword(portalDocument.getPassword()));
+        }
         return portalDocumentMapper.insertPortalDocument(portalDocument);
     }
 
@@ -68,7 +81,41 @@ public class PortalDocumentServiceImpl implements IPortalDocumentService
     public int updatePortalDocument(PortalDocument portalDocument)
     {
         portalDocument.setUpdateTime(DateUtils.getNowDate());
+        //加密算法必须放到 try catch 中
+        if(portalDocument.getIsLock().equals("1") && StringUtils.isNotEmpty(portalDocument.getPassword())){
+            portalDocument.setPassword(encryptPassword(portalDocument.getPassword()));
+        }
         return portalDocumentMapper.updatePortalDocument(portalDocument);
+    }
+
+    /**
+     * 加密算法
+     * @param password
+     * @return
+     */
+    private String encryptPassword(String password) {
+            try {
+                String key = "abc@321#DEF45676"; // 16 bytes key for AES-128
+                return AESEncrypter.encrypt(key, password);
+            } catch (Exception e){
+                e.getMessage();
+                return null;
+            }
+    }
+
+    /**
+     * 解密算法
+     * @param password
+     * @return
+     */
+    private String decryptPassword(String password) {
+        try {
+            String key = "abc@321#DEF45676"; // 16 bytes key for AES-128
+            return AESEncrypter.decrypt(key, password);
+        } catch (Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
     /**

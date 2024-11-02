@@ -7,13 +7,37 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-document-edit" th:object="${portalDocument}">
+        <form class="form-horizontal m" id="form-document-edit" th:object="${portalDocument}"  style="width: 80%">
             <input name="docId" th:field="*{docId}" type="hidden">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-6 control-label is-required">文件名称：</label>
+                    <div class="col-sm-6">
+                        <input name="docTitle" th:field="*{docTitle}" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">类型：</label>
+                    <div class="col-sm-8">
+                        <select name="docType" class="form-control" th:with="type=${@dict.getType('sys_file_type')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{docType}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label is-required">文件名称：</label>
+                    <label class="col-sm-3 control-label">是否加密：</label>
                     <div class="col-sm-8">
-                        <input name="docTitle" th:field="*{docTitle}" class="form-control" type="text" required>
+                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_article_yes')}">
+                            <input type="radio" th:id="${'isLock-' + dict.dictCode}" name="isLock" th:data="${dict.dictValue}" th:value="${dict.dictValue}" th:field="*{isLock}">
+                            <label th:for="${'isLock_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                        </div>
+                        <div class="radio-box">
+                            <input name="password" id="password" th:field="*{password}" style="width: 200px;" class="form-control" placeholder="请设置密码" type="text">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -36,37 +60,11 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">类型：</label>
-                    <div class="col-sm-8">
-                        <select name="docType" class="form-control" th:with="type=${@dict.getType('sys_file_type')}">
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{docType}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">是否加密：</label>
-                    <div class="col-sm-8">
-                        <input name="isLock" th:field="*{isLock}" class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">加密密码：</label>
-                    <div class="col-sm-8">
-                        <input name="password" th:field="*{password}" class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
                     <label class="col-sm-3 control-label is-required">附件：</label>
                     <div class="col-sm-8">
-                        <input type="hidden" name="accessory" th:field="*{accessory}">
-                       <div class="file-loading">
-                            <input class="form-control file-upload" id="accessory" name="file" type="file">
+                        <div class="input-group m-b">
+                            <input  name="accessory" id="thumbnail" th:field="*{accessory}" readonly class="form-control">
+                            <span class="input-group-addon" style="border: 0; padding: 0 6px"><input type="file" id="tpicf"></span>
                         </div>
                     </div>
                 </div>
@@ -80,6 +78,18 @@
                 </div>
             </div>
         </form>
+
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                        class="fa fa-check"></i>保 存
+                </button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+        </div>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: bootstrap-fileinput-js"/>
@@ -92,30 +102,75 @@
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-document-edit').serialize());
+                //加密验证
+                var selectedValue = $('input[name="isLock"]:checked').val();
+                if (selectedValue == 1){
+                    var password = $('#password').val();
+                    if (password == ""){
+                        $.modal.alertWarning("密码状态为：是，请输入密码");
+                        return;
+                    }
+                }
+                $.operate.saveTab(prefix + "/edit", $('#form-document-edit').serialize());
             }
         }
 
-        $(".file-upload").each(function (i) {
-            var val = $("input[name='" + this.id + "']").val()
-            $(this).fileinput({
-                'uploadUrl': ctx + 'common/upload',
-                initialPreviewAsData: true,
-                initialPreview: [val],
-                maxFileCount: 1,
-                autoReplace: true
-            }).on('fileuploaded', function (event, data, previewId, index) {
-                $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
-            }).on('fileremoved', function (event, id, index) {
-                $("input[name='" + event.currentTarget.id + "']").val('')
-            })
-            $(this).fileinput('_initFileActions');
+
+        // 是否加密
+        $(document).ready(function() {
+            //默认的radio的值
+            var defaultValue = $('input[name="isLock"]:checked').val();
+            if (defaultValue == 1) {
+                $('#password').show();
+            } else {
+                $('#password').hide();
+            }
+            //默认密码值
+            var pass = $('#password').val();
+            // 根据选中的radio的值显示或隐藏密码框
+            $('input[name="isLock"]').change(function () {
+                // 获取选中的选中的radio的值
+                var selectedValue = $('input[name="isLock"]:checked').val();
+                if (selectedValue == 1) {
+                    $('#password').val(pass != '' ? pass : '');
+                    $('#password').show();
+                } else {
+                    $('#password').hide();
+                    $('#password').val("")
+                }
+            });
         });
 
+
+        // 文件上传
+        $("#tpicf").change(function () {
+            var data = new FormData();
+            data.append("editormd-image-file", $("#tpicf")[0].files[0]);
+            $.ajax({
+                type: "post",
+                url: ctx + "common/uploadFild",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (result) {
+                    console.log(1111,result);
+                    console.log(2222, web_status.SUCCESS);
+                    if (result.code == web_status.SUCCESS) {
+                        $("#thumbnail").val(result.fileName)
+                    }
+                },
+                error: function (error) {
+                    alert("图片上传失败。");
+                }
+            });
+        })
         $(function() {
             $('.summernote').each(function(i) {
                 $('#' + this.id).summernote({
                     lang: 'zh-CN',
+                    height: 300,
                     dialogsInBody: true,
                     callbacks: {
                         onChange: function(contents, $edittable) {

@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="docTitle != null  and docTitle != ''"> and doc_title = #{docTitle}</if>
             <if test="docType != null  and docType != ''"> and doc_type = #{docType}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectPortalDocumentByDocId" parameterType="Long" resultMap="PortalDocumentResult">

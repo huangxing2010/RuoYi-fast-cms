@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.StringUtils;
@@ -79,6 +76,7 @@ public class CommonController
     {
         try
         {
+//            System.out.println("file" + file);
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
@@ -163,4 +161,40 @@ public class CommonController
             log.error("下载文件失败", e);
         }
     }
+
+    /**
+     * markdown上传请求
+     * @param file @RequestParam(value = "editormd-image-file", required = false) 其中 value = "editormd-image-file" 固定写法不要改变
+     * @return
+     */
+    @PostMapping("/uploadFild")
+    @ResponseBody
+    public AjaxResult markdownUploadFile(@RequestParam(value = "editormd-image-file", required = false) MultipartFile file) throws Exception
+    {
+        try
+        {
+            System.out.println("file===" + file);
+            // 上传文件博客路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, file);
+            String url = serverConfig.getUrl() + fileName;
+            AjaxResult ajax = AjaxResult.success();
+            // editormd所需的返回结构
+            ajax.put("message", "上传成功");
+            //0表示上传失败;1表示上传成功
+            ajax.put("success", 1);
+            ajax.put("url", url);
+            ajax.put("fileName", fileName);
+            ajax.put("newFileName", FileUtils.getName(fileName));
+            ajax.put("originalFilename", file.getOriginalFilename());
+            return ajax;
+        }
+        catch (Exception e)
+        {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+
 }
