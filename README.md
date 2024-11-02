@@ -117,10 +117,9 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 
 ## 在线体验
 
-* 模板 01：http://web-demo.system-code.vip/red/home
-* 模板 02：http://web-demo.system-code.vip/green/home
-* 模板 03：http://web-demo.system-code.vip/blue/home
-* 模板陆续发布...
+* PC模版预览地址：http://web-demo.system-code.vip
+* 目前已发布三套PC模版，稍后陆续发布...
+* 
 * 后台地址：http://web-demo.system-code.vip/login
 * 后台账号：ry/admin123
 
