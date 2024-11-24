@@ -2,6 +2,7 @@ package com.ruoyi.project.portal.article.domain;
 
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+import com.ruoyi.project.portal.category.domain.PortalCategory;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -92,6 +93,11 @@ public class PortalArticle extends BaseEntity
 
     /** 签发ID */
     private Long grantId;
+
+    /**
+     * 关联栏目
+     */
+    private PortalCategory portalCategory;
 
     public void setArticleId(Long articleId)
     {
@@ -266,6 +272,14 @@ public class PortalArticle extends BaseEntity
         return grantId;
     }
 
+    public PortalCategory getPortalCategory() {
+        return portalCategory;
+    }
+
+    public void setPortalCategory(PortalCategory portalCategory) {
+        this.portalCategory = portalCategory;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -294,6 +308,7 @@ public class PortalArticle extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
+                .append("portalCategory", getPortalCategory())
             .toString();
     }
 }

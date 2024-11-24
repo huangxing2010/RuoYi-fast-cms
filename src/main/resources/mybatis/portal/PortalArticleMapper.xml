@@ -30,77 +30,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
+        <association property="portalCategory" javaType="PortalCategory">
+            <id column="category_id" property="categoryId" />
+            <result column="category_name" property="categoryName" />
+        </association>
     </resultMap>
 
     <sql id="selectPortalArticleVo">
-        select article_id, dept_id, article_title, subhead, category_id, source, description, thumbnail, content, art_type, art_skip, degree_num, is_push, is_slide, is_top, check_status, is_issue, show_status, is_grant, grant_id, remark, create_by, create_time, update_by, update_time from sys_portal_article
+        select a.article_id, a.dept_id, a.article_title, a.subhead, a.category_id, a.source, a.description, a.thumbnail, a.content, a.art_type, a.art_skip, a.degree_num, a.is_push, a.is_slide, a.is_top, a.check_status, a.is_issue, a.show_status, a.is_grant, a.grant_id, a.remark, a.create_by, a.create_time, a.update_by, a.update_time, c.category_id, c.category_name
+        from sys_portal_article a
+        left join sys_portal_category c on a.category_id = c.category_id
     </sql>
 
     <select id="selectPortalArticleList" parameterType="PortalArticle" resultMap="PortalArticleResult">
         <include refid="selectPortalArticleVo"/>
         <where>  
-            <if test="articleTitle != null  and articleTitle != ''"> and article_title like concat('%', #{articleTitle}, '%')</if>
-            <if test="deptId != null "> and dept_id = #{deptId}</if>
-            <if test="categoryId != null "> and category_id = #{categoryId}</if>
-            <if test="artType != null  and artType != ''"> and art_type = #{artType}</if>
-            <if test="isPush != null  and isPush != ''"> and is_push = #{isPush}</if>
-            <if test="isSlide != null  and isSlide != ''"> and is_slide = #{isSlide}</if>
-            <if test="isTop != null  and isTop != ''"> and is_top = #{isTop}</if>
-            <if test="checkStatus != null  and checkStatus != ''"> and check_status = #{checkStatus}</if>
-            <if test="isIssue != null  and isIssue != ''"> and is_issue = #{isIssue}</if>
-            <if test="showStatus != null  and showStatus != ''"> and show_status = #{showStatus}</if>
-            <if test="isGrant != null  and isGrant != ''"> and is_grant = #{isGrant}</if>
-            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="articleTitle != null  and articleTitle != ''"> and a.article_title like concat('%', #{articleTitle}, '%')</if>
+            <if test="deptId != null "> and a.dept_id = #{deptId}</if>
+            <if test="categoryId != null "> and a.category_id = #{categoryId}</if>
+            <if test="artType != null  and artType != ''"> and a.art_type = #{artType}</if>
+            <if test="isPush != null  and isPush != ''"> and a.is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''"> and a.is_slide = #{isSlide}</if>
+            <if test="isTop != null  and isTop != ''"> and a.is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''"> and a.check_status = #{checkStatus}</if>
+            <if test="isIssue != null  and isIssue != ''"> and a.is_issue = #{isIssue}</if>
+            <if test="showStatus != null  and showStatus != ''"> and a.show_status = #{showStatus}</if>
+            <if test="isGrant != null  and isGrant != ''"> and a.is_grant = #{isGrant}</if>
+            <if test="createBy != null  and createBy != ''"> and a.create_by = #{createBy}</if>
         </where>
-        order by update_time desc
+        order by a.update_time desc
     </select>
 
-    <select id="selectPortalArticleLists" parameterType="Long" resultMap="PortalArticleResult">
-        select * from sys_portal_article where dept_id in
-        <foreach item="articleId" collection="array" open="(" separator="," close=")">
-            #{articleId}
-        </foreach>
-        and art_type = '0'
-        and show_status = '0'
-        order by create_time desc
-    </select>
     
     <select id="selectPortalArticleByArticleId" parameterType="Long" resultMap="PortalArticleResult">
         <include refid="selectPortalArticleVo"/>
-        where article_id = #{articleId}
+        where a.article_id = #{articleId}
     </select>
-
-    <!--首页分类栏目文章查询，map 参数-->
-   <!-- <select id="selectHomeArticleByCategoryId" parameterType="java.util.Map" resultMap="PortalArticleResult">
-        <include refid="selectPortalArticleVo"/>
-        where category_id= #{categoryId}
-        and is_issue = #{isIssue}
-        and art_type = #{artType}
-        and show_status = #{showStatus}
-        order by create_time desc
-        limit #{limit}
-    </select>-->
 
     <!--首页栏目文章查询-->
     <select id="selectHomeArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
         <include refid="selectPortalArticleVo"/>
         <where>
-        <if test="categoryId != null ">category_id in
+        <if test="categoryId != null ">a.category_id in
             <foreach item="categoryId" index="index" collection="categoryId" open="(" separator="," close=")">
                 #{categoryId}
             </foreach>
         </if>
-        <if test="deptId != null ">and dept_id = #{deptId}</if>
-        <if test="artType != null  and artType != ''">and art_type = #{artType}</if>
-        <if test="isPush != null  and isPush != ''">and is_push = #{isPush}</if>
-        <if test="isSlide != null  and isSlide != ''">and is_slide = #{isSlide}</if>
-        <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
-        <if test="isTop != null  and isTop != ''">and is_top = #{isTop}</if>
-        <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
-        <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
-        <if test="createBy != null  and createBy != ''">and create_by = #{createBy}</if>
+        <if test="deptId != null ">and a.dept_id = #{deptId}</if>
+        <if test="artType != null  and artType != ''">and a.art_type = #{artType}</if>
+        <if test="isPush != null  and isPush != ''">and a.is_push = #{isPush}</if>
+        <if test="isSlide != null  and isSlide != ''">and a.is_slide = #{isSlide}</if>
+        <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
+        <if test="isTop != null  and isTop != ''">and a.is_top = #{isTop}</if>
+        <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
+        <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
+        <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy}</if>
         </where>
-        order by create_time desc
+        order by a.create_time desc
         limit #{limit}
     </select>
 
@@ -108,21 +94,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectDeptArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
         <include refid="selectPortalArticleVo"/>
         <where>
-            <if test="deptId != null ">dept_id in
+            <if test="deptId != null ">a.dept_id in
                 <foreach item="deptId" index="index" collection="deptId" open="(" separator="," close=")">
                     #{deptId}
                 </foreach>
             </if>
-            <if test="isPush != null  and isPush != ''">and is_push = #{isPush}</if>
-            <if test="isSlide != null  and isSlide != ''">and is_slide = #{isSlide}</if>
-            <if test="isIssue != null  and isIssue != ''">and is_issue = #{isIssue}</if>
-            <if test="isTop != null  and isTop != ''">and is_top = #{isTop}</if>
-            <if test="checkStatus != null  and checkStatus != ''">and check_status = #{checkStatus}</if>
-            <if test="showStatus != null  and showStatus != ''">and show_status = #{showStatus}</if>
-            <if test="createBy != null  and createBy != ''">and create_by = #{createBy} </if>
+            <if test="isPush != null  and isPush != ''">and a.is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''">and a.is_slide = #{isSlide}</if>
+            <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
+            <if test="isTop != null  and isTop != ''">and a.is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
+            <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
+            <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy} </if>
 
         </where>
-        order by create_time desc
+        order by a.create_time desc
         limit #{limit}
     </select>
 

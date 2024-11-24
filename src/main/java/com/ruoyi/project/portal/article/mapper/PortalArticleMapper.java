@@ -60,13 +60,7 @@ public interface PortalArticleMapper
      */
     public Integer selectArticleCount(Map params);
 
-    /**
-     * 根据部门查询文章内容列表
-     *
-     * @param deptIds 文章内容
-     * @return 文章内容集合
-     */
-    public List<PortalArticle> selectPortalArticleLists(Long[] deptIds);
+
 
     /**
      * 新增文章内容

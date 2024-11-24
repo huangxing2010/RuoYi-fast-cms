@@ -135,6 +135,13 @@
                     title: '文章标题'
                 },
                 {
+                    field: 'portalCategory',
+                    title: '栏目名称',
+                    formatter: function (value, row, index) {
+                        return value.categoryName;
+                    }
+                },
+                /*{
                     field: 'categoryId',
                     title: '栏目分类',
                     formatter: function (value, row, index) {
@@ -157,7 +164,7 @@
                             return '<span id="' + targetElement + '"  style="color: #2b2b2b">0</span>'
                         }
                     }
-                },
+                },*/
                 {
                     field: 'source',
                     title: '文章来源'
