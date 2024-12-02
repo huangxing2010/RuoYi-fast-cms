@@ -36,6 +36,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPortalSpecialVo"/>
         where special_id = #{specialId}
     </select>
+
+    <!--首页快捷导航查询-->
+    <select id="selectHomeSpecialList" parameterType="java.util.Map" resultMap="PortalSpecialResult">
+        <include refid="selectPortalSpecialVo"/>
+        <where>
+            <if test="specialType != null  and specialType != ''">and special_type = #{specialType}</if>
+        </where>
+        order by sort_num asc
+        limit #{limit}
+    </select>
         
     <insert id="insertPortalSpecial" parameterType="PortalSpecial" useGeneratedKeys="true" keyProperty="specialId">
         insert into sys_portal_special

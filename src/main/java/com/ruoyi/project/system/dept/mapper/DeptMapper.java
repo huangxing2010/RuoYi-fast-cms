@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.dept.mapper;
 
 import java.util.List;
+
+import com.ruoyi.project.portal.article.domain.PortalArticle;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.project.system.dept.domain.Dept;
 
@@ -114,4 +116,7 @@ public interface DeptMapper
      * @return 子部门数
      */
     public int selectNormalChildrenDeptById(Long deptId);
+
+    /**搜索**/
+    public List<PortalArticle> getSearchArticleList(String keyword, int parametType);
 }

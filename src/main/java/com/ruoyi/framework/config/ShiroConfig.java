@@ -296,9 +296,10 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/skin/**", "anon"); //存放资源样式等文件
         filterChainDefinitionMap.put("/profile/**", "anon"); //图片路径
 
-        //站群
+        //模版匿名访问
         filterChainDefinitionMap.put("/green/**", "anon");
         filterChainDefinitionMap.put("/red/**", "anon");
+        filterChainDefinitionMap.put("/blue/**", "anon");
 
         // 匿名访问不鉴权注解列表
         List<String> permitAllUrl = SpringUtils.getBean(PermitAllUrlProperties.class).getUrls();

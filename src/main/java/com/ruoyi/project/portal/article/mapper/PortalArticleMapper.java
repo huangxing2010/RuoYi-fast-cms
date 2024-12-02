@@ -1,6 +1,7 @@
 package com.ruoyi.project.portal.article.mapper;
 
 import com.ruoyi.project.portal.article.domain.PortalArticle;
+import com.ruoyi.project.portal.special.domain.PortalSpecial;
 
 import java.util.List;
 import java.util.Map;
@@ -22,11 +23,11 @@ public interface PortalArticleMapper
     public PortalArticle selectPortalArticleByArticleId(Long articleId);
 
     /**
-     * 首页分类栏目文章查询，map 参数
+     * 首页多栏目文章查询
      * @param params
      * @return
      */
-//    public List<PortalArticle> selectHomeArticleByCategoryId(Map params);
+    public List<PortalArticle> selectHomeArticleLists(Map params);
 
 
 
@@ -45,6 +46,13 @@ public interface PortalArticleMapper
      * @return
      */
     public List<PortalArticle> selectHomeArticleList(Map params);
+
+    /**
+     * 列表栏目文章查询
+     * @param params
+     * @return
+     */
+    public List<PortalArticle> selectListArticleByCategoryId(Map params);
 
     /**
      * 部门文章查询
@@ -93,4 +101,12 @@ public interface PortalArticleMapper
      * @return 结果
      */
     public int deletePortalArticleByArticleIds(String[] articleIds);
+
+    /**
+     * 前端文章搜索
+     *
+     * @param params 文章内容
+     * @return 文章内容集合
+     */
+    public List<PortalArticle> searchPortalArticleList(Map params);
 }

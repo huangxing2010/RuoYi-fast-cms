@@ -1,7 +1,7 @@
 
 
 <p align="center">
-	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/%E5%88%9B%E6%84%8F.png">
+	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/uploadPath/upload/2024/12/01/logo.jpg">
 </p>
 
 
@@ -25,6 +25,8 @@
 * Maven >= 3.0
 
 ## 升级日志
+* 2024-12-02：升级和优化PC端模版
+* 2024-11-24：升级文章与分类一对一关联查询
 * 2024-11-02：新增文件下载(自由选择是否加密)
 * 2024-10-12：新增访问统计
 * 2024-10-05：v1.0.0 初始化项目，发布到Gitee。

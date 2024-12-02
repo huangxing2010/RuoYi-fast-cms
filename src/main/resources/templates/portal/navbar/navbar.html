@@ -23,8 +23,8 @@
                                 <input type="text" name="navName"/>
                             </li>
                             <li>
-                                <label>文章类型：</label>
-                                <select name="articleType" th:with="type=${@dict.getType('sys_article_type')}">
+                                <label>页面类型：</label>
+                                <select name="articleType" th:with="type=${@dict.getType('sys_navbar_type')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
@@ -73,7 +73,7 @@
         var addFlag = [[${@permission.hasPermi('portal:navbar:add')}]];
         var editFlag = [[${@permission.hasPermi('portal:navbar:edit')}]];
         var removeFlag = [[${@permission.hasPermi('portal:navbar:remove')}]];
-        var articleTypeDatas = [[${@dict.getType('sys_article_type')}]];
+        var navbarTypeDatas = [[${@dict.getType('sys_navbar_type')}]];
         var navTypeDatas = [[${@dict.getType('sys_nav_type')}]];
         var navStatusDatas = [[${@dict.getType('sys_show_hide')}]];
         var prefix = ctx + "portal/navbar";
@@ -99,10 +99,10 @@
                 },
                 {
                     field: 'articleType',
-                    title: '文章类型',
+                    title: '页面类型',
                     align: 'left',
                     formatter: function(value, row, index) {
-                        return $.table.selectDictLabel(articleTypeDatas, value);
+                        return $.table.selectDictLabel(navbarTypeDatas, value);
                     }
                 },
                 {

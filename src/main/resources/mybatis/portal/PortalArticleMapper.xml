@@ -33,11 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="portalCategory" javaType="PortalCategory">
             <id column="category_id" property="categoryId" />
             <result column="category_name" property="categoryName" />
+            <result column="c_thum" property="thumbnail" />
         </association>
     </resultMap>
 
     <sql id="selectPortalArticleVo">
-        select a.article_id, a.dept_id, a.article_title, a.subhead, a.category_id, a.source, a.description, a.thumbnail, a.content, a.art_type, a.art_skip, a.degree_num, a.is_push, a.is_slide, a.is_top, a.check_status, a.is_issue, a.show_status, a.is_grant, a.grant_id, a.remark, a.create_by, a.create_time, a.update_by, a.update_time, c.category_id, c.category_name
+        select a.article_id, a.dept_id, a.article_title, a.subhead, a.category_id, a.source, a.description, a.thumbnail, a.content, a.art_type, a.art_skip, a.degree_num, a.is_push, a.is_slide, a.is_top, a.check_status, a.is_issue, a.show_status, a.is_grant, a.grant_id, a.remark, a.create_by, a.create_time, a.update_by, a.update_time, c.category_id, c.category_name, c.thumbnail as c_thum
         from sys_portal_article a
         left join sys_portal_category c on a.category_id = c.category_id
     </sql>
@@ -58,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isGrant != null  and isGrant != ''"> and a.is_grant = #{isGrant}</if>
             <if test="createBy != null  and createBy != ''"> and a.create_by = #{createBy}</if>
         </where>
-        order by a.update_time desc
+        order by a.create_time desc
     </select>
 
     
@@ -66,28 +67,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPortalArticleVo"/>
         where a.article_id = #{articleId}
     </select>
-
-    <!--首页栏目文章查询-->
-    <select id="selectHomeArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
+    <!--首页多栏目文章查询-->
+    <select id="selectHomeArticleLists" parameterType="java.util.Map" resultMap="PortalArticleResult">
         <include refid="selectPortalArticleVo"/>
         <where>
-        <if test="categoryId != null ">a.category_id in
-            <foreach item="categoryId" index="index" collection="categoryId" open="(" separator="," close=")">
-                #{categoryId}
-            </foreach>
-        </if>
-        <if test="deptId != null ">and a.dept_id = #{deptId}</if>
-        <if test="artType != null  and artType != ''">and a.art_type = #{artType}</if>
-        <if test="isPush != null  and isPush != ''">and a.is_push = #{isPush}</if>
-        <if test="isSlide != null  and isSlide != ''">and a.is_slide = #{isSlide}</if>
-        <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
-        <if test="isTop != null  and isTop != ''">and a.is_top = #{isTop}</if>
-        <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
-        <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
-        <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy}</if>
+            <if test="categoryId != null ">a.category_id in
+                <foreach item="categoryId" index="index" collection="categoryId" open="(" separator="," close=")">
+                    #{categoryId}
+                </foreach>
+            </if>
+            <if test="deptId != null ">and a.dept_id = #{deptId}</if>
+            <if test="artType != null  and artType != ''">and a.art_type = #{artType}</if>
+            <if test="isPush != null  and isPush != ''">and a.is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''">and a.is_slide = #{isSlide}</if>
+            <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
+            <if test="isTop != null  and isTop != ''">and a.is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
+            <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
+            <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy}</if>
         </where>
         order by a.create_time desc
         limit #{limit}
+    </select>
+
+    <!--首页单栏目文章查询-->
+    <select id="selectHomeArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>
+            <if test="categoryId != null ">and a.category_id = #{categoryId}</if>
+            <if test="deptId != null ">and a.dept_id = #{deptId}</if>
+            <if test="artType != null  and artType != ''">and a.art_type = #{artType}</if>
+            <if test="isPush != null  and isPush != ''">and a.is_push = #{isPush}</if>
+            <if test="isSlide != null  and isSlide != ''">and a.is_slide = #{isSlide}</if>
+            <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
+            <if test="isTop != null  and isTop != ''">and a.is_top = #{isTop}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
+            <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
+            <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy}</if>
+        </where>
+        order by a.create_time desc
+        limit #{limit}
+    </select>
+    <!--列表栏目文章查询-->
+    <select id="selectListArticleByCategoryId" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>
+            <if test="categoryId != null ">and a.category_id = #{categoryId}</if>
+            <if test="checkStatus != null  and checkStatus != ''">and a.check_status = #{checkStatus}</if>
+            <if test="isIssue != null  and isIssue != ''">and a.is_issue = #{isIssue}</if>
+            <if test="showStatus != null  and showStatus != ''">and a.show_status = #{showStatus}</if>
+            <if test="artType != null  and artType != ''">and a.art_type = #{artType}</if>
+            <if test="createBy != null  and createBy != ''">and a.create_by = #{createBy}</if>
+        </where>
+        order by a.create_time desc
+        limit #{limit}
+    </select>
+
+    <!-- 前端文章搜索-->
+    <select id="searchPortalArticleList" parameterType="java.util.Map" resultMap="PortalArticleResult">
+        <include refid="selectPortalArticleVo"/>
+        <where>
+            <if test="categoryId != null ">a.category_id in
+                <foreach item="categoryId" index="index" collection="categoryId" open="(" separator="," close=")">
+                    #{categoryId}
+                </foreach>
+            </if>
+            <if test="articleTitle != null  and articleTitle != ''"> and a.article_title like concat('%', #{articleTitle}, '%')</if>
+            <if test="artType != null  and artType != ''"> and a.art_type = #{artType}</if>
+            <if test="showStatus != null  and showStatus != ''"> and a.show_status = #{showStatus}</if>
+            <if test="isIssue != null  and isIssue != ''"> and a.is_issue = #{isIssue}</if>
+        </where>
+        order by a.create_time desc
     </select>
 
     <!--首页部门文章查询-->

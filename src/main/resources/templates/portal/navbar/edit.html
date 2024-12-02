@@ -81,9 +81,9 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">文章类型：</label>
+                <label class="col-sm-3 control-label is-required">页面类型：</label>
                 <div class="col-sm-8">
-                    <select name="articleType" class="form-control m-b" id="articleType" th:with="type=${@dict.getType('sys_article_type')}" required>
+                    <select name="articleType" class="form-control m-b" id="articleType" th:with="type=${@dict.getType('sys_navbar_type')}" required>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{articleType}"></option>
                     </select>
                 </div>

@@ -3,6 +3,7 @@ package com.ruoyi.project.portal.special.mapper;
 import com.ruoyi.project.portal.special.domain.PortalSpecial;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 专题管理Mapper接口
@@ -59,4 +60,12 @@ public interface PortalSpecialMapper
      * @return 结果
      */
     public int deletePortalSpecialBySpecialIds(String[] specialIds);
+
+    /**
+     * 首页快捷导航列表
+     *
+     * @param params 快捷导航
+     * @return 专题管理集合
+     */
+    public List<PortalSpecial> selectHomeSpecialList(Map params);
 }
