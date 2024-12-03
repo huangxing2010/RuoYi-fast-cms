@@ -122,17 +122,23 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 ## 在线体验
 
 * PC模版预览地址：http://web-demo.system-code.vip
-* 目前已发布三套PC模版，稍后陆续发布...
+* 目前已发布三套PC模版，陆续发布精致的网站模版...
 * 
 * 后台地址：http://web-demo.system-code.vip/login
 * 后台账号：ry/admin123
 
-## 网站模板支出
-> 声明：PC网站模版没有开源，请购买授权，仅需 ¥499元，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">PC网站模版</a>； 购买后，可永久免费使用；
+## 模版开发文档
+> 为购买模板授权的用户提供了详细开发文档，可参考文档进行二次开发。文档大纲:
+<p align="center">
+	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/doc.jpg">
+</p>
+
+## PC模板授权
+> 授权：PC网站模版提供保障性技术支持，需要请购买授权源码，仅需¥499元，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">PC网站模版</a>； 购买后，可永久免费使用；
 > 
-> 服务：提供远程部署及技术咨询服务；
+> 服务：免费远程提供本地部署及技术咨询服务；
 > 
-> 支出：陆续发布精致的网站模版，欢迎大家选购。
+> 声明：授权源码限于具备java基础技术人员购买使用。您若需要定制开发或技术运维，可联系作者，价格以实际需求为准。
 
 
 ## 后台预览图
@@ -162,4 +168,4 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 * bootstrap
 
 ## QQ群交流
-QQ群：749272719
+> 加QQ群：749272719，加微信：javaPioneer
