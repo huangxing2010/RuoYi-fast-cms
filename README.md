@@ -1,15 +1,14 @@
 
 
 <p align="center">
-	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/uploadPath/upload/2024/12/01/logo.jpg">
+	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/logo.png">
 </p>
-
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
 <h4 align="center">基于RuoYi-fast v4.7.9开发的轻量级Java网站内容管理系统</h4>
 <p align="center">
-	<a href="https://gitee.com/y_project/RuoYi"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
+	<a href="https://github.com/yangzongzhuan/RuoYi-fast"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
+	<a href="https://github.com/yangzongzhuan/RuoYi-fast?tab=MIT-1-ov-file#readme"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
 
@@ -32,11 +31,13 @@
 * 2024-10-05：v1.0.0 初始化项目，发布到Gitee。
 
 
+
+
 ## 本项目扩展功能
 - [x] 文章管理：文章内容推荐、置顶、幻灯、审核、发布、跳转链接。
 - [x] 分类管理：无限级分类，支持自定义分类模板。
 - [x] 单页管理：单页面增加、修改、删除。
-- [x] 专栏管理：专题专栏，支持自定义分类模板。
+- [x] 专题专栏：专题专栏，支持自定义分类模板。
 - [x] 导航管理：支持自定义导航模板，自定义跳转链接、高亮显示。
 - [x] 在线投稿：投稿功能，支持在线投稿，投稿管理，投稿审核。
 - [x] 幻灯管理：根据设置的类型任意调用。
@@ -47,6 +48,7 @@
 - [x] 信箱管理：支持在线写信、回复、加密查看等。
 - [x] 回收站：支持文章软删除、硬删除。
 - [x] 访问统计：网站首页底部显示访问总量、今天、昨天ip、pv 访问量。
+- [x] 加密下载：后台可以自由切换是否加密的文件下载。
 
 
 ## 内置功能
