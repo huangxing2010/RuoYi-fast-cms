@@ -13,8 +13,7 @@
 
 
 ## 系统介绍
-> 一直想做一款Java CMS 网站管理系统，曾用各种内容管理系统脚手架开发单位门户网站，发现开发高端大气官网总不能随心所欲，为拥有一套javaweb管理系统旨在满足政务服务平台及站群系统定制需求，结合多年网站设计开发经验由云而生。
-本项目基于RuoYi-fast二次开发，网站后台用SpringBoot + MyBatis，前端网站模版用thymeleaf+bootstrap开发，多套模板，可自由飞翔。
+> 一直想做一款Java CMS 网站管理系统,浏览了各种开源CMS内容管理系统,发现总不能随心所欲,为拥有一套简单灵活的java网站后台管理系统,旨在满足政务服务平台及站群系统定制需求由云而生。本项目基于若依管理系统(ruoyi-fast)二次开发,后台用SpringBoot + MyBatis，前端网站模版用thymeleaf+bootstrap开发，多套模板，可自由飞翔。
 
   
 ## 环境要求
@@ -24,6 +23,7 @@
 * Maven >= 3.0
 
 ## 升级日志
+* 2024-12-22：期待已久的手机端模板发布
 * 2024-12-02：升级和优化PC端模版
 * 2024-11-24：升级文章与分类一对一关联查询
 * 2024-11-02：新增文件下载(自由选择是否加密)
@@ -115,13 +115,18 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
     </tr>
 <tr>
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo3.jpg"/></td>
-        <td>陆续发布，敬请期待...</td>
+        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/mobile-home.jpg"/></td>
+        
     </tr>
+<tr>
+<td>陆续发布，敬请期待...</td>
+</tr>
 </table>
 
 ## 在线体验
 
-* PC模版预览地址：http://web-demo.system-code.vip
+* PC模版预览地址：http://web-demo.system-code.vip ；
+* 手机模版预览：请访问PC模版预览右上角二维码扫码体验；
 * 目前已发布三套PC模版，陆续发布精致的网站模版...
 * 
 * 后台地址：http://web-demo.system-code.vip/login

@@ -300,6 +300,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/green/**", "anon");
         filterChainDefinitionMap.put("/red/**", "anon");
         filterChainDefinitionMap.put("/blue/**", "anon");
+        filterChainDefinitionMap.put("/mobile/**", "anon");
 
         // 匿名访问不鉴权注解列表
         List<String> permitAllUrl = SpringUtils.getBean(PermitAllUrlProperties.class).getUrls();
