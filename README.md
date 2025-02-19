@@ -110,12 +110,12 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 ## 模版预览图
 <table>
     <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo1.jpg"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo2.jpg"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/demo1.jpg?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/demo2.jpg?raw=true"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo3.jpg"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/mobile-home.jpg"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/demo3.jpg?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/mobile-home.jpg?raw=true"/></td>
     </tr>
 <tr>
 <td>陆续发布，敬请期待...</td>
@@ -137,7 +137,7 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 ## 模版开发文档
 > 为购买模板授权的用户提供了详细开发文档，可参考文档进行二次开发。文档大纲:
 <p align="center">
-	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/doc.jpg">
+	<img alt="logo" src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/doc.jpg?raw=true">
 </p>
 
 ## PC模板授权
@@ -152,20 +152,20 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 
 <table>
     <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/001.png"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/002.png"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/001.png?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/002.png?raw=true"/></td>
     </tr>
 <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/002.png"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/003.png"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/002.png?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/003.png?raw=true"/></td>
     </tr>
 <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/005.png"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/006.png"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/005.png?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/006.png?raw=true"/></td>
     </tr>
 <tr>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/007.png"/></td>
-        <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/008.png"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/007.png?raw=true"/></td>
+        <td><img src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/008.png?raw=true"/></td>
     </tr>
 </table>
 
