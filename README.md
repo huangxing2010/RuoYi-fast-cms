@@ -1,7 +1,7 @@
 
 
 <p align="center">
-	<img alt="logo" src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/logo.png">
+	<img alt="logo" src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/logo.png?raw=true">
 </p>
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
@@ -113,14 +113,16 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo1.jpg"/></td>
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo2.jpg"/></td>
     </tr>
-<tr>
+    <tr>
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/demo3.jpg"/></td>
         <td><img src="https://gitee.com/xnqysabout/RuoYi-fast-cms/raw/main/public/demoImg/mobile-home.jpg"/></td>
-        
     </tr>
 <tr>
 <td>陆续发布，敬请期待...</td>
+<td>陆续发布，敬请期待...</td>
 </tr>
+
+
 </table>
 
 ## 在线体验
