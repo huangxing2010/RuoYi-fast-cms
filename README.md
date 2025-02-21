@@ -140,17 +140,17 @@ git clone https://gitee.com/y_project/RuoYi-fast-cms.git
 	<img alt="logo" src="https://github.com/huangxing2010/RuoYi-fast-cms/blob/main/public/demoImg/doc.jpg?raw=true">
 </p>
 
-[//]: # (## PC模板授权)
+## PC模板授权
 
-[//]: # (> 授权：PC网站模版提供保障性技术支持，需要请购买授权源码，仅需¥499元，购买地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">PC网站模版</a>； 购买后，可永久免费使用；)
+> 授权：PC网站模版授权地址：<a href="https://www.xnqys.com/article/22.html" target="_blank">查看授权</a>； 一次授权永久使用；
 
-[//]: # (> )
+> 
 
-[//]: # (> 服务：免费远程提供本地部署及技术咨询服务；)
+> 服务：免费远程提供本地部署及技术咨询服务；
 
-[//]: # (> )
+> 
 
-[//]: # (> 声明：授权源码限于具备java基础技术人员购买使用。您若需要定制开发或技术运维，可联系作者，价格以实际需求为准。)
+> 声明：授权源码限于具备java基础技术人员购买使用。您若需要定制开发或技术运维，可联系作者，价格以实际需求为准。
 
 
 ## 后台预览图
