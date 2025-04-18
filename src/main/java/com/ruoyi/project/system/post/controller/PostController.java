@@ -81,6 +81,7 @@ public class PostController extends BaseController
     /**
      * 新增岗位
      */
+    @RequiresPermissions("system:post:add")
     @GetMapping("/add")
     public String add()
     {

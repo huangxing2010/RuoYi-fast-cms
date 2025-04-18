@@ -283,10 +283,11 @@ function createMenuItem(dataUrl, menuName, isRefresh) {
         // 添加选项卡对应的iframe
         var str1 = '<iframe class="RuoYi_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" data-panel="' + panelUrl + '" seamless></iframe>';
         if (isScrollToTop) {
-            $('.mainContent', topWindow).find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(str1);
+            $('.mainContent', topWindow).find('iframe.RuoYi_iframe').hide();
         } else {
-            $('.mainContent', topWindow).find('iframe.RuoYi_iframe').css({"visibility": "hidden", "position": "absolute"}).parents('.mainContent').append(str1);
+            $('.mainContent', topWindow).find('iframe.RuoYi_iframe').css({"visibility": "hidden", "position": "absolute", "left": "0", "top": "0"});
         }
+        $('.mainContent', topWindow).append(str1);
         
         window.parent.$.modal.loading("数据加载中，请稍候...");
         $('.mainContent iframe:visible', topWindow).on('load', function() {
@@ -360,7 +361,7 @@ function openToCurrentTab(obj) {
     if (isScrollToTop) {
         $(obj).show().siblings('.RuoYi_iframe').hide();
     } else {
-        $(obj).css({"visibility": "visible", "position": "static"}).siblings('.RuoYi_iframe').css({"visibility": "hidden", "position": "absolute"});
+        $(obj).css({"visibility": "visible", "position": "static"}).siblings('.RuoYi_iframe').css({"visibility": "hidden", "position": "absolute", "left": "0", "top": "0"});
     }
 }
 
@@ -572,6 +573,12 @@ function _stopIt(e) {
 
 /** 设置全局ajax处理 */
 $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        var csrftoken = $('meta[name=csrf-token]').attr('content')
+        if (($.common.equalsIgnoreCase(settings.type, "POST"))) {
+            xhr.setRequestHeader("csrf_token", csrftoken)
+        }
+    },
     complete: function(XMLHttpRequest, textStatus) {
         if (textStatus == 'timeout') {
             $.modal.alertWarning("服务器超时，请稍后再试！");

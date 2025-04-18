@@ -2,7 +2,7 @@ package com.ruoyi.common.constant;
 
 /**
  * Shiro通用常量
- * 
+ *
  * @author ruoyi
  */
 public class ShiroConstants
@@ -33,9 +33,15 @@ public class ShiroConstants
     public static final String ERROR = "errorMsg";
 
     /**
+     * csrf key
+     */
+    public static final String CSRF_TOKEN = "csrf_token";
+
+
+    /**
      * 编码格式
      */
-    public static final String ENCODING = "UTF-8";
+//    public static final String ENCODING = "UTF-8";
 
     /**
      * 当前在线会话

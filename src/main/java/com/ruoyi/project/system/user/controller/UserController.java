@@ -108,6 +108,7 @@ public class UserController extends BaseController
     /**
      * 新增用户
      */
+    @RequiresPermissions("system:user:add")
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
@@ -204,6 +205,7 @@ public class UserController extends BaseController
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        userService.checkUserDataScope(userId);
         mmap.put("user", userService.selectUserById(userId));
         return prefix + "/resetPwd";
     }
@@ -234,6 +236,7 @@ public class UserController extends BaseController
     @GetMapping("/authRole/{userId}")
     public String authRole(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        userService.checkUserDataScope(userId);
         User user = userService.selectUserById(userId);
         // 获取用户所属的角色列表
         List<Role> roles = roleService.selectRolesByUserId(userId);
