@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.document.mapper.PortalDocumentMapper">
+    
+    <resultMap type="PortalDocument" id="PortalDocumentResult">
+        <result property="docId"    column="doc_id"    />
+        <result property="docTitle"    column="doc_title"    />
+        <result property="docDesc"    column="doc_desc"    />
+        <result property="docContent"    column="doc_content"    />
+        <result property="docType"    column="doc_type"    />
+        <result property="isLock"    column="is_lock"    />
+        <result property="password"    column="password"    />
+        <result property="accessory"    column="accessory"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPortalDocumentVo">
+        select doc_id, doc_title, doc_desc, doc_content, doc_type, is_lock, password, accessory, remark, create_by, create_time, update_by, update_time from sys_portal_document
+    </sql>
+
+    <select id="selectPortalDocumentList" parameterType="PortalDocument" resultMap="PortalDocumentResult">
+        <include refid="selectPortalDocumentVo"/>
+        <where>  
+            <if test="docTitle != null  and docTitle != ''"> and doc_title = #{docTitle}</if>
+            <if test="docType != null  and docType != ''"> and doc_type = #{docType}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectPortalDocumentByDocId" parameterType="Long" resultMap="PortalDocumentResult">
+        <include refid="selectPortalDocumentVo"/>
+        where doc_id = #{docId}
+    </select>
+
+    <insert id="insertPortalDocument" parameterType="PortalDocument">
+        insert into sys_portal_document
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="docId != null">doc_id,</if>
+            <if test="docTitle != null and docTitle != ''">doc_title,</if>
+            <if test="docDesc != null">doc_desc,</if>
+            <if test="docContent != null">doc_content,</if>
+            <if test="docType != null">doc_type,</if>
+            <if test="isLock != null">is_lock,</if>
+            <if test="password != null">password,</if>
+            <if test="accessory != null and accessory != ''">accessory,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="docId != null">#{docId},</if>
+            <if test="docTitle != null and docTitle != ''">#{docTitle},</if>
+            <if test="docDesc != null">#{docDesc},</if>
+            <if test="docContent != null">#{docContent},</if>
+            <if test="docType != null">#{docType},</if>
+            <if test="isLock != null">#{isLock},</if>
+            <if test="password != null">#{password},</if>
+            <if test="accessory != null and accessory != ''">#{accessory},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalDocument" parameterType="PortalDocument">
+        update sys_portal_document
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="docTitle != null and docTitle != ''">doc_title = #{docTitle},</if>
+            <if test="docDesc != null">doc_desc = #{docDesc},</if>
+            <if test="docContent != null">doc_content = #{docContent},</if>
+            <if test="docType != null">doc_type = #{docType},</if>
+            <if test="isLock != null">is_lock = #{isLock},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="accessory != null and accessory != ''">accessory = #{accessory},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where doc_id = #{docId}
+    </update>
+
+    <delete id="deletePortalDocumentByDocId" parameterType="Long">
+        delete from sys_portal_document where doc_id = #{docId}
+    </delete>
+
+    <delete id="deletePortalDocumentByDocIds" parameterType="String">
+        delete from sys_portal_document where doc_id in 
+        <foreach item="docId" collection="array" open="(" separator="," close=")">
+            #{docId}
+        </foreach>
+    </delete>
+
+</mapper>

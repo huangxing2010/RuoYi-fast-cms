@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.special.mapper.PortalSpecialMapper">
+    
+    <resultMap type="PortalSpecial" id="PortalSpecialResult">
+        <result property="specialId"    column="special_id"    />
+        <result property="specialTitle"    column="special_title"    />
+        <result property="specialType"    column="special_type"    />
+        <result property="thumbnail"    column="thumbnail"    />
+        <result property="specialSkip"    column="special_skip"    />
+        <result property="sortNum"    column="sort_num"    />
+        <result property="lspecialStatus"    column="lspecial_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPortalSpecialVo">
+        select special_id, special_title, special_type, thumbnail, special_skip, sort_num, lspecial_status, remark, create_by, create_time, update_by, update_time from sys_portal_special
+    </sql>
+
+    <select id="selectPortalSpecialList" parameterType="PortalSpecial" resultMap="PortalSpecialResult">
+        <include refid="selectPortalSpecialVo"/>
+        <where>  
+            <if test="specialTitle != null  and specialTitle != ''"> and special_title = #{specialTitle}</if>
+            <if test="specialType != null  and specialType != ''"> and special_type = #{specialType}</if>
+            <if test="lspecialStatus != null  and lspecialStatus != ''"> and lspecial_status = #{lspecialStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPortalSpecialBySpecialId" parameterType="Long" resultMap="PortalSpecialResult">
+        <include refid="selectPortalSpecialVo"/>
+        where special_id = #{specialId}
+    </select>
+
+    <!--首页快捷导航查询-->
+    <select id="selectHomeSpecialList" parameterType="java.util.Map" resultMap="PortalSpecialResult">
+        <include refid="selectPortalSpecialVo"/>
+        <where>
+            <if test="specialType != null  and specialType != ''">and special_type = #{specialType}</if>
+        </where>
+        order by sort_num asc
+        limit #{limit}
+    </select>
+        
+    <insert id="insertPortalSpecial" parameterType="PortalSpecial" useGeneratedKeys="true" keyProperty="specialId">
+        insert into sys_portal_special
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specialTitle != null and specialTitle != ''">special_title,</if>
+            <if test="specialType != null and specialType != ''">special_type,</if>
+            <if test="thumbnail != null">thumbnail,</if>
+            <if test="specialSkip != null">special_skip,</if>
+            <if test="sortNum != null">sort_num,</if>
+            <if test="lspecialStatus != null">lspecial_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specialTitle != null and specialTitle != ''">#{specialTitle},</if>
+            <if test="specialType != null and specialType != ''">#{specialType},</if>
+            <if test="thumbnail != null">#{thumbnail},</if>
+            <if test="specialSkip != null">#{specialSkip},</if>
+            <if test="sortNum != null">#{sortNum},</if>
+            <if test="lspecialStatus != null">#{lspecialStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalSpecial" parameterType="PortalSpecial">
+        update sys_portal_special
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specialTitle != null and specialTitle != ''">special_title = #{specialTitle},</if>
+            <if test="specialType != null and specialType != ''">special_type = #{specialType},</if>
+            <if test="thumbnail != null">thumbnail = #{thumbnail},</if>
+            <if test="specialSkip != null">special_skip = #{specialSkip},</if>
+            <if test="sortNum != null">sort_num = #{sortNum},</if>
+            <if test="lspecialStatus != null">lspecial_status = #{lspecialStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where special_id = #{specialId}
+    </update>
+
+    <delete id="deletePortalSpecialBySpecialId" parameterType="Long">
+        delete from sys_portal_special where special_id = #{specialId}
+    </delete>
+
+    <delete id="deletePortalSpecialBySpecialIds" parameterType="String">
+        delete from sys_portal_special where special_id in 
+        <foreach item="specialId" collection="array" open="(" separator="," close=")">
+            #{specialId}
+        </foreach>
+    </delete>
+
+</mapper>

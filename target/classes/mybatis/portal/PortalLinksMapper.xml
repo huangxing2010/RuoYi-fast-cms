@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.links.mapper.PortalLinksMapper">
+    
+    <resultMap type="PortalLinks" id="PortalLinksResult">
+        <result property="linksId"    column="links_id"    />
+        <result property="linksTitle"    column="links_title"    />
+        <result property="linksType"    column="links_type"    />
+        <result property="thumbnail"    column="thumbnail"    />
+        <result property="linksSkip"    column="links_skip"    />
+        <result property="sortNum"    column="sort_num"    />
+        <result property="linksStatus"    column="links_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPortalLinksVo">
+        select links_id, links_title, links_type, thumbnail, links_skip, sort_num, links_status, remark, create_by, create_time, update_by, update_time from sys_portal_links
+    </sql>
+
+    <select id="selectPortalLinksList" parameterType="PortalLinks" resultMap="PortalLinksResult">
+        <include refid="selectPortalLinksVo"/>
+        <where>  
+            <if test="linksTitle != null  and linksTitle != ''"> and links_title = #{linksTitle}</if>
+            <if test="linksType != null  and linksType != ''"> and links_type = #{linksType}</if>
+            <if test="linksStatus != null  and linksStatus != ''"> and links_status = #{linksStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPortalLinksByLinksId" parameterType="Long" resultMap="PortalLinksResult">
+        <include refid="selectPortalLinksVo"/>
+        where links_id = #{linksId}
+    </select>
+        
+    <insert id="insertPortalLinks" parameterType="PortalLinks" useGeneratedKeys="true" keyProperty="linksId">
+        insert into sys_portal_links
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="linksTitle != null and linksTitle != ''">links_title,</if>
+            <if test="linksType != null and linksType != ''">links_type,</if>
+            <if test="thumbnail != null">thumbnail,</if>
+            <if test="linksSkip != null and linksSkip != ''">links_skip,</if>
+            <if test="sortNum != null">sort_num,</if>
+            <if test="linksStatus != null">links_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="linksTitle != null and linksTitle != ''">#{linksTitle},</if>
+            <if test="linksType != null and linksType != ''">#{linksType},</if>
+            <if test="thumbnail != null">#{thumbnail},</if>
+            <if test="linksSkip != null and linksSkip != ''">#{linksSkip},</if>
+            <if test="sortNum != null">#{sortNum},</if>
+            <if test="linksStatus != null">#{linksStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalLinks" parameterType="PortalLinks">
+        update sys_portal_links
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="linksTitle != null and linksTitle != ''">links_title = #{linksTitle},</if>
+            <if test="linksType != null and linksType != ''">links_type = #{linksType},</if>
+            <if test="thumbnail != null">thumbnail = #{thumbnail},</if>
+            <if test="linksSkip != null and linksSkip != ''">links_skip = #{linksSkip},</if>
+            <if test="sortNum != null">sort_num = #{sortNum},</if>
+            <if test="linksStatus != null">links_status = #{linksStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where links_id = #{linksId}
+    </update>
+
+    <delete id="deletePortalLinksByLinksId" parameterType="Long">
+        delete from sys_portal_links where links_id = #{linksId}
+    </delete>
+
+    <delete id="deletePortalLinksByLinksIds" parameterType="String">
+        delete from sys_portal_links where links_id in 
+        <foreach item="linksId" collection="array" open="(" separator="," close=")">
+            #{linksId}
+        </foreach>
+    </delete>
+
+</mapper>

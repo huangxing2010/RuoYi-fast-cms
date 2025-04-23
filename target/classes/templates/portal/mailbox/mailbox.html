@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('首长信箱列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>信件主题：</label>
+                            <input type="text" name="mailTitle"/>
+                        </li>
+                        <li>
+                            <label>写信人：</label>
+                            <input type="text" name="writeName"/>
+                        </li>
+                        <li>
+                            <label>联系电话：</label>
+                            <input type="text" name="phonenumber"/>
+                        </li>
+                        <!-- <li>
+                             <label>信箱类型：</label>
+                             <select name="mailType" th:with="type=${@dict.getType('sys_mailbox_type')}">
+                                 <option value="">所有</option>
+                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                             </select>
+                         </li>-->
+                        <li>
+                            <label>办理状态：</label>
+                            <select name="mailStatus" th:with="type=${@dict.getType('sys_mailbox_status')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="portal:mailbox:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>-->
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="portal:mailbox:edit">
+                <i class="fa fa-edit"></i> 回复
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="portal:mailbox:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="portal:mailbox:export">
+                <i class="fa fa-download"></i> 导出
+            </a>-->
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('portal:mailbox:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('portal:mailbox:remove')}]];
+    var mailTypeDatas = [[${@dict.getType('sys_mailbox_type')}]];
+    var mailStatusDatas = [[${@dict.getType('sys_mailbox_status')}]];
+    var isLockDatas = [[${@dict.getType('sys_article_yes')}]];
+    var prefix = ctx + "portal/mailbox";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "首长信箱",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'mailboxId',
+                    title: '信箱id',
+                    visible: false
+                },
+                {
+                    field: 'mailTitle',
+                    title: '信件主题'
+                },
+                {
+                    field: 'writeName',
+                    title: '写信人姓名'
+                },
+                {
+                    field: 'phonenumber',
+                    title: '写信人电话'
+                },
+                {
+                    field: 'description',
+                    title: '内容描述'
+                },
+                // {
+                //     field: 'mailType',
+                //     title: '信箱类型',
+                //     formatter: function(value, row, index) {
+                //        return $.table.selectDictLabel(mailTypeDatas, value);
+                //     }
+                // },
+
+                {
+                    field: 'isLock',
+                    title: '是否加密',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isLockDatas, value);
+                    }
+                },
+                {
+                    field: 'password',
+                    title: '查看密码',
+                    formatter: function (value, row, index) {
+                        console.log(3333,value)
+
+                        if (value != '') {
+                            console.log(3334,row.mailboxId)
+                            let targetElement = 'mid' + row.mailboxId
+                            $.ajax({
+                                type: "get",
+                                url: prefix + "/getMailboxPassword/" + row.mailboxId,
+                                datatype: 'json',
+                                cache: true,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    console.log(33555, data.password)
+                                    $('#' + targetElement).text(data.password == '' ? '无' : data.password);
+                                },
+                                error: function (error) {
+                                    console.log('Error: ' + error);
+                                }
+                            })
+                            return '<span id="' + targetElement + '"  style="color: #098">密码</span>'
+                        }
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '写信时间'
+                },
+                {
+                    field: 'remark',
+                    title: '回复内容'
+                },
+
+                {
+                    field: 'updateTime',
+                    title: '回复时间'
+                },
+                {
+                    field: 'mailStatus',
+                    title: '办理状态',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(mailStatusDatas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.mailboxId + '\')"><i class="fa fa-edit"></i>回复</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.mailboxId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

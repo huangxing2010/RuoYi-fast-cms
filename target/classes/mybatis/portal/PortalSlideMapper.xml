@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.portal.slide.mapper.PortalSlideMapper">
+    
+    <resultMap type="PortalSlide" id="PortalSlideResult">
+        <result property="slideId"    column="slide_id"    />
+        <result property="slideTitle"    column="slide_title"    />
+        <result property="slideType"    column="slide_type"    />
+        <result property="thumbnail"    column="thumbnail"    />
+        <result property="slideSkip"    column="slide_skip"    />
+        <result property="sortNum"    column="sort_num"    />
+        <result property="slideStatus"    column="slide_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPortalSlideVo">
+        select slide_id, slide_title, slide_type, thumbnail, slide_skip, sort_num, slide_status, remark, create_by, create_time, update_by, update_time from sys_portal_slide
+    </sql>
+
+    <select id="selectPortalSlideList" parameterType="PortalSlide" resultMap="PortalSlideResult">
+        <include refid="selectPortalSlideVo"/>
+        <where>  
+            <if test="slideTitle != null  and slideTitle != ''"> and slide_title like concat('%', #{slideTitle}, '%')</if>
+            <if test="slideType != null  and slideType != ''"> and slide_type = #{slideType}</if>
+        </where>
+    </select>
+    
+    <select id="selectPortalSlideBySlideId" parameterType="Long" resultMap="PortalSlideResult">
+        <include refid="selectPortalSlideVo"/>
+        where slide_id = #{slideId}
+    </select>
+        
+    <insert id="insertPortalSlide" parameterType="PortalSlide" useGeneratedKeys="true" keyProperty="slideId">
+        insert into sys_portal_slide
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="slideTitle != null and slideTitle != ''">slide_title,</if>
+            <if test="slideType != null and slideType != ''">slide_type,</if>
+            <if test="thumbnail != null and thumbnail != ''">thumbnail,</if>
+            <if test="slideSkip != null and slideSkip != ''">slide_skip,</if>
+            <if test="sortNum != null">sort_num,</if>
+            <if test="slideStatus != null">slide_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="slideTitle != null and slideTitle != ''">#{slideTitle},</if>
+            <if test="slideType != null and slideType != ''">#{slideType},</if>
+            <if test="thumbnail != null and thumbnail != ''">#{thumbnail},</if>
+            <if test="slideSkip != null and slideSkip != ''">#{slideSkip},</if>
+            <if test="sortNum != null">#{sortNum},</if>
+            <if test="slideStatus != null">#{slideStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePortalSlide" parameterType="PortalSlide">
+        update sys_portal_slide
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="slideTitle != null and slideTitle != ''">slide_title = #{slideTitle},</if>
+            <if test="slideType != null and slideType != ''">slide_type = #{slideType},</if>
+            <if test="thumbnail != null and thumbnail != ''">thumbnail = #{thumbnail},</if>
+            <if test="slideSkip != null and slideSkip != ''">slide_skip = #{slideSkip},</if>
+            <if test="sortNum != null">sort_num = #{sortNum},</if>
+            <if test="slideStatus != null">slide_status = #{slideStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where slide_id = #{slideId}
+    </update>
+
+    <delete id="deletePortalSlideBySlideId" parameterType="Long">
+        delete from sys_portal_slide where slide_id = #{slideId}
+    </delete>
+
+    <delete id="deletePortalSlideBySlideIds" parameterType="String">
+        delete from sys_portal_slide where slide_id in 
+        <foreach item="slideId" collection="array" open="(" separator="," close=")">
+            #{slideId}
+        </foreach>
+    </delete>
+
+</mapper>
