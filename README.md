@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
-<h4 align="center">基于RuoYi-fast v4.7.9开发的轻量级Java网站内容管理系统</h4>
+<h4 align="center">基于RuoYi-fast v4.8.0开发的轻量级Java网站内容管理系统</h4>
 <p align="center">
 	<a href="https://github.com/yangzongzhuan/RuoYi-fast"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
 	<a href="https://github.com/yangzongzhuan/RuoYi-fast?tab=MIT-1-ov-file#readme"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
@@ -17,12 +17,12 @@
 
   
 ## 环境要求
-
 * JDK >= 1.8
 * MySQL >= 5.7
 * Maven >= 3.0
 
 ## 升级日志
+* 2025-04-22：同步官方最新版本
 * 2024-12-22：期待已久的手机端模板发布
 * 2024-12-02：升级和优化PC端模版
 * 2024-11-24：升级文章与分类一对一关联查询
