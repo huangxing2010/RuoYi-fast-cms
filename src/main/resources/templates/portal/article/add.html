@@ -187,7 +187,8 @@
                 var data = $("#form-article-add").serializeArray();
                 var tags = $.form.selectSelects("tag");
                 data.push({"name": "tags", "value": tags});
-                $.operate.saveTab(prefix + "/add", data);
+                console.log(44445, data)
+                // $.operate.saveTab(prefix + "/add", data);
                 // $.operate.save(prefix + "/add", $('#form-article-add').serialize());
             }
         }

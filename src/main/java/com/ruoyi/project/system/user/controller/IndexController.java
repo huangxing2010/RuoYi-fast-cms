@@ -3,7 +3,6 @@ package com.ruoyi.project.system.user.controller;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +48,7 @@ public class IndexController extends BaseController
 
     // 系统首页
     @GetMapping("/index")
-    public String index(ModelMap mmap, HttpServletRequest request)
+    public String index(ModelMap mmap)
     {
         // 取身份信息
         User user = getSysUser();
@@ -86,8 +85,6 @@ public class IndexController extends BaseController
             }
         }
         String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index-topnav" : "index";
-        // CSRF Token
-        request.getSession().setAttribute(ShiroConstants.CSRF_TOKEN, ServletUtils.generateToken());
         return webIndex;
     }
 

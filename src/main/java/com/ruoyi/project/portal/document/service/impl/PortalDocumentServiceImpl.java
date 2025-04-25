@@ -101,6 +101,7 @@ public class PortalDocumentServiceImpl implements IPortalDocumentService
                 e.getMessage();
                 return null;
             }
+
     }
 
     /**

@@ -21,7 +21,7 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 
 /**
  * 通用请求处理
- *
+ * 
  * @author ruoyi
  */
 @Controller
@@ -37,7 +37,7 @@ public class CommonController
 
     /**
      * 通用下载请求
-     *
+     * 
      * @param fileName 文件名称
      * @param delete 是否删除
      */
@@ -76,7 +76,7 @@ public class CommonController
     {
         try
         {
-//            System.out.println("file" + file);
+            System.out.println("file" + file);
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称

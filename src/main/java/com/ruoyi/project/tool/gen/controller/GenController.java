@@ -27,7 +27,6 @@ import com.ruoyi.common.utils.sql.SqlUtil;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.config.GenConfig;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.domain.CxSelect;
@@ -257,10 +256,6 @@ public class GenController extends BaseController
     @ResponseBody
     public AjaxResult genCode(@PathVariable("tableName") String tableName)
     {
-        if (!GenConfig.isAllowOverwrite())
-        {
-            return AjaxResult.error("【系统预设】不允许生成文件覆盖到本地");
-        }
         genTableService.generatorCode(tableName);
         return AjaxResult.success();
     }

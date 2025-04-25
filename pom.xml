@@ -5,7 +5,7 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi</artifactId>
-    <version>4.8.0</version>
+    <version>4.7.9</version>
     <packaging>jar</packaging>
 
     <name>ruoyi</name>
@@ -37,10 +37,6 @@
         <swagger.version>3.0.0</swagger.version>
         <poi.version>4.1.2</poi.version>
         <oshi.version>6.6.5</oshi.version>
-        <!-- override dependency version -->
-        <tomcat.version>9.0.102</tomcat.version>
-        <logback.version>1.2.13</logback.version>
-        <spring-framework.version>5.3.39</spring-framework.version>
     </properties>
 
     <dependencies>
@@ -235,6 +231,8 @@
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
         </dependency>
+
+        <!--文件加密-->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>

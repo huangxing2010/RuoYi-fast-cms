@@ -211,6 +211,8 @@
 
         $(".file-upload").each(function (i) {
             var val = $("input[name='" + this.id + "']").val()
+            console.log("event===" + val)
+            console.log("event2===" + ctx)
             $(this).fileinput({
                 'uploadUrl': ctx + 'common/upload',
                 initialPreviewAsData: true,
@@ -218,9 +220,12 @@
                 maxFileCount: 1,
                 autoReplace: true
             }).on('fileuploaded', function (event, data, previewId, index) {
+                console.log("event===" + event)
+                console.log("data===" + data)
                 $("input[name='" + event.currentTarget.id + "']").val(data.response.fileName)
 
             }).on('fileremoved', function (event, id, index) {
+                console.log("event===" + event)
 
                 $("input[name='" + event.currentTarget.id + "']").val('')
             })

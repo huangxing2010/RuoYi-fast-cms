@@ -37,74 +37,52 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
         Map<String, Object> controllers = applicationContext.getBeansWithAnnotation(Controller.class);
         for (Object bean : controllers.values())
         {
-            Class<?> beanClass;
-            if (bean instanceof Advised)
+            if (!(bean instanceof Advised))
             {
-                beanClass = ((Advised) bean).getTargetSource().getTarget().getClass();
+                continue;
             }
-            else
+            Class<?> beanClass = ((Advised) bean).getTargetSource().getTarget().getClass();
+            RequestMapping base = beanClass.getAnnotation(RequestMapping.class);
+            String[] baseUrl = {};
+            if (Objects.nonNull(base))
             {
-                beanClass = bean.getClass();
+                baseUrl = base.value();
             }
-            // 处理类级别的匿名访问注解
-            if (beanClass.isAnnotationPresent(Anonymous.class))
-            {
-                RequestMapping baseMapping = beanClass.getAnnotation(RequestMapping.class);
-                if (Objects.nonNull(baseMapping))
-                {
-                    String[] baseUrl = baseMapping.value();
-                    for (String url : baseUrl)
-                    {
-                        urls.add(prefix(url) + "/*");
-                    }
-                    continue;
-                }
-            }
-
-            // 处理方法级别的匿名访问注解
             Method[] methods = beanClass.getDeclaredMethods();
             for (Method method : methods)
             {
-                if (method.isAnnotationPresent(Anonymous.class))
+                if (method.isAnnotationPresent(Anonymous.class) && method.isAnnotationPresent(RequestMapping.class))
                 {
-                    RequestMapping baseMapping = beanClass.getAnnotation(RequestMapping.class);
-                    String[] baseUrl = {};
-                    if (Objects.nonNull(baseMapping))
-                    {
-                        baseUrl = baseMapping.value();
-                    }
-                    if (method.isAnnotationPresent(RequestMapping.class))
-                    {
-                        RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-                        String[] uri = requestMapping.value();
-                        urls.addAll(rebuildUrl(baseUrl, uri));
-                    }
-                    else if (method.isAnnotationPresent(GetMapping.class))
-                    {
-                        GetMapping requestMapping = method.getAnnotation(GetMapping.class);
-                        String[] uri = requestMapping.value();
-                        urls.addAll(rebuildUrl(baseUrl, uri));
-                    }
-                    else if (method.isAnnotationPresent(PostMapping.class))
-                    {
-                        PostMapping requestMapping = method.getAnnotation(PostMapping.class);
-                        String[] uri = requestMapping.value();
-                        urls.addAll(rebuildUrl(baseUrl, uri));
-                    }
-                    else if (method.isAnnotationPresent(PutMapping.class))
-                    {
-                        PutMapping requestMapping = method.getAnnotation(PutMapping.class);
-                        String[] uri = requestMapping.value();
-                        urls.addAll(rebuildUrl(baseUrl, uri));
-                    }
-                    else if (method.isAnnotationPresent(DeleteMapping.class))
-                    {
-                        DeleteMapping requestMapping = method.getAnnotation(DeleteMapping.class);
-                        String[] uri = requestMapping.value();
-                        urls.addAll(rebuildUrl(baseUrl, uri));
-                    }
+                    RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
+                    String[] uri = requestMapping.value();
+                    urls.addAll(rebuildUrl(baseUrl, uri));
+                }
+                else if (method.isAnnotationPresent(Anonymous.class) && method.isAnnotationPresent(GetMapping.class))
+                {
+                    GetMapping requestMapping = method.getAnnotation(GetMapping.class);
+                    String[] uri = requestMapping.value();
+                    urls.addAll(rebuildUrl(baseUrl, uri));
+                }
+                else if (method.isAnnotationPresent(Anonymous.class) && method.isAnnotationPresent(PostMapping.class))
+                {
+                    PostMapping requestMapping = method.getAnnotation(PostMapping.class);
+                    String[] uri = requestMapping.value();
+                    urls.addAll(rebuildUrl(baseUrl, uri));
+                }
+                else if (method.isAnnotationPresent(Anonymous.class) && method.isAnnotationPresent(PutMapping.class))
+                {
+                    PutMapping requestMapping = method.getAnnotation(PutMapping.class);
+                    String[] uri = requestMapping.value();
+                    urls.addAll(rebuildUrl(baseUrl, uri));
+                }
+                else if (method.isAnnotationPresent(Anonymous.class) && method.isAnnotationPresent(DeleteMapping.class))
+                {
+                    DeleteMapping requestMapping = method.getAnnotation(DeleteMapping.class);
+                    String[] uri = requestMapping.value();
+                    urls.addAll(rebuildUrl(baseUrl, uri));
                 }
             }
+
         }
     }
 
@@ -113,16 +91,9 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
         List<String> urls = new ArrayList<>();
         for (String base : bases)
         {
-            if (uris.length > 0)
+            for (String uri : uris)
             {
-                for (String uri : uris)
-                {
-                    urls.add(prefix(base) + prefix(uri));
-                }
-            }
-            else
-            {
-                urls.add(prefix(base));
+                urls.add(prefix(base) + prefix(uri));
             }
         }
         return urls;
