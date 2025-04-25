@@ -68,14 +68,7 @@ public class PostController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        try
-        {
-            return toAjax(postService.deletePostByIds(ids));
-        }
-        catch (Exception e)
-        {
-            return error(e.getMessage());
-        }
+        return toAjax(postService.deletePostByIds(ids));
     }
 
     /**
