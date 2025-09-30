@@ -50,7 +50,6 @@
 		var editFlag = [[${@permission.hasPermi('system:dept:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:dept:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
-		var deptType = [[${@dict.getType('sys_dept_type')}]];
 		var prefix = ctx + "system/dept"
 
 		$(function() {
@@ -71,14 +70,7 @@
 		            field: 'deptName',
 		            title: '部门名称',
 		            align: "left"
-		        }, {
-						field: 'deptType',
-						title: '类型',
-						align: "left",
-						formatter: function(value, item, index) {
-							return $.table.selectDictLabel(deptType, item.deptType);
-						}
-					},
+		        },
 		        {
 		            field: 'orderNum',
 		            title: '排序',

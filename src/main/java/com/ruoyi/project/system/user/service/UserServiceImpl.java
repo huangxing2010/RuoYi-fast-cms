@@ -1,6 +1,7 @@
 package com.ruoyi.project.system.user.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
@@ -288,6 +289,31 @@ public class UserServiceImpl implements IUserService
     }
 
     /**
+     * 修改用户头像
+     * 
+     * @param userId 用户ID
+     * @param avatar 头像地址
+     * @return 结果
+     */
+    public boolean updateUserAvatar(Long userId, String avatar)
+    {
+        return userMapper.updateUserAvatar(userId, avatar) > 0;
+    }
+
+    /**
+     * 更新用户登录信息（IP和登录时间）
+     * 
+     * @param userId 用户ID
+     * @param loginIp 登录IP地址
+     * @param loginDate 登录时间
+     * @return 结果
+     */
+    public void updateLoginInfo(Long userId, String loginIp, Date loginDate)
+    {
+        userMapper.updateLoginInfo(userId, loginIp, loginDate);
+    }
+
+    /**
      * 用户授权角色
      * 
      * @param userId 用户ID
@@ -311,8 +337,8 @@ public class UserServiceImpl implements IUserService
     public int resetUserPwd(User user)
     {
         user.randomSalt();
-        user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-        return updateUserInfo(user);
+        String password = passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt());
+        return userMapper.resetUserPwd(user.getUserId(), password, user.getSalt());
     }
 
     /**
@@ -532,6 +558,7 @@ public class UserServiceImpl implements IUserService
                     checkUserDataScope(u.getUserId());
                     deptService.checkDeptDataScope(user.getDeptId());
                     user.setUserId(u.getUserId());
+                    user.setDeptId(u.getDeptId());
                     user.setUpdateBy(operName);
                     userMapper.updateUser(user);
                     successNum++;
@@ -577,6 +604,6 @@ public class UserServiceImpl implements IUserService
     @Override
     public int changeStatus(User user)
     {
-        return userMapper.updateUser(user);
+        return userMapper.updateUserStatus(user.getUserId(), user.getStatus());
     }
 }
