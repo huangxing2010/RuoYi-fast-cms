@@ -7,7 +7,7 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi-fast-cms </h1>
 <h4 align="center">基于RuoYi-fast v4.8.0开发的轻量级Java网站内容管理系统</h4>
 <p align="center">
-	<a href="https://github.com/yangzongzhuan/RuoYi-fast"><img src="https://img.shields.io/badge/RuoYi-v4.7.9-brightgreen.svg"></a>
+	<a href="https://github.com/yangzongzhuan/RuoYi-fast"><img src="https://img.shields.io/badge/RuoYi-v4.8.1-brightgreen.svg"></a>
 	<a href="https://github.com/yangzongzhuan/RuoYi-fast?tab=MIT-1-ov-file#readme"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
