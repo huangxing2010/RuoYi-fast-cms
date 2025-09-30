@@ -39,9 +39,6 @@ public class Dept extends BaseEntity
     /** 邮箱 */
     private String email;
 
-    /** 部门类型:0总部,1机关,2连队 */
-    private String deptType;
-
     /** 部门状态:0正常,1停用 */
     private String status;
 
@@ -140,10 +137,6 @@ public class Dept extends BaseEntity
         this.email = email;
     }
 
-    public String getDeptType() {return deptType;}
-
-    public void setDeptType(String deptType) {this.deptType = deptType;}
-
     public String getStatus()
     {
         return status;
@@ -196,7 +189,6 @@ public class Dept extends BaseEntity
             .append("leader", getLeader())
             .append("phone", getPhone())
             .append("email", getEmail())
-            .append("deptType", getDeptType())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())
             .append("createBy", getCreateBy())

@@ -1,336 +1,125 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>统计</title>
-	<link rel="shortcut icon" href="favicon.ico">
-	<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-	<link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
-	<link href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"/>
-	<link href="../static/css/style.min.css" th:href="@{/css/style.min.css}" rel="stylesheet"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>若依介绍</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.min.css" th:href="@{/css/style.min.css}" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
+    <div class="row border-bottom white-bg dashboard-header">
 
-	<div class="row">
-		<div class="col-sm-3">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<span class="label label-success pull-right">全年</span>
-					<h5>文章总数</h5>
-				</div>
-				<div class="ibox-content">
-					<h1 class="no-margins">321 </h1>
-					<div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i>
-					</div>
-					<small>条</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<span class="label label-info pull-right">全年</span>
-					<h5>专题</h5>
-				</div>
-				<div class="ibox-content">
-					<h1 class="no-margins">75</h1>
-					<div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i>
-					</div>
-					<small>新文章</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<span class="label label-primary pull-right">今天</span>
-					<h5>访客</h5>
-				</div>
-				<div class="ibox-content">
-					<h1 class="no-margins">1120</h1>
-					<div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i>
-					</div>
-					<small>新访客</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<span class="label label-danger pull-right">最近一个月</span>
-					<h5>活跃用户</h5>
-				</div>
-				<div class="ibox-content">
-					<h1 class="no-margins">26</h1>
-					<div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i>
-					</div>
-					<small>12月</small>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="col-sm-6">
+            <h2>Ruoyi-fast-cms网站内容管理系统</h2>
+            <p>一直想做一款Java CMS 网站管理系统,浏览了各种开源CMS内容管理系统,发现总不能随心所欲,为拥有一套简单灵活的java网站后台管理系统,旨在满足政务服务平台及站群系统定制需求由云而生。本项目基于若依管理系统(ruoyi-fast)二次开发,后台用SpringBoot + MyBatis，前端网站模版用thymeleaf+bootstrap开发<p>
+                <b>当前版本：</b><span>v[[${version}]]</span>
+            </p>
+            <p>
+                <span class="label label-warning">&yen;免费开源</span>
+            </p>
+            <br>
+            <p>
+                <a class="btn btn-success btn-outline" href="https://github.com/huangxing2010/RuoYi-fast-cms" target="_blank">
+                    <i class="fa fa-cloud"> </i> 开源地址
+                </a>
+                <a class="btn btn-white btn-bitbucket" href="http://www.xnqys.com" target="_blank">
+                    <i class="fa fa-home"></i> 官网地址
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <h4>技术选型：</h4>
+            <ol>
+                <li>核心框架：Spring Boot。</li>
+                <li>安全框架：Apache Shiro。</li>
+                <li>模板引擎：Thymeleaf。</li>
+                <li>持久层框架：MyBatis。</li>
+                <li>定时任务：Quartz。</li>
+                <li>数据库连接池：Druid。</li>
+                <li>工具类：Fastjson。</li>
+                <li>更多……</li>
+            </ol>
+        </div>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5>文章</h5>
-					<div class="pull-right">
-						<div class="btn-group">
-							<button type="button" class="btn btn-xs btn-white active">天</button>
-							<button type="button" class="btn btn-xs btn-white">月</button>
-							<button type="button" class="btn btn-xs btn-white">年</button>
-						</div>
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+			<div class="col-sm-4">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>公司简介</h5>
 					</div>
-				</div>
-				<div class="ibox-content">
-					<div class="row">
-						<div class="col-sm-9">
-							<div class="flot-chart">
-								<div class="flot-chart-content" id="flot-dashboard-chart"></div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<ul class="stat-list">
-								<li>
-									<h2 class="no-margins">321</h2>
-									<small>文章总数</small>
-									<div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 48%;" class="progress-bar"></div>
-									</div>
-								</li>
-								<li>
-									<h2 class="no-margins ">321</h2>
-									<small>最近一个月文章</small>
-									<div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 60%;" class="progress-bar"></div>
-									</div>
-								</li>
-								<li>
-									<h2 class="no-margins ">321</h2>
-									<small>最近一个月发布量</small>
-									<div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 22%;" class="progress-bar"></div>
-									</div>
-								</li>
-							</ul>
+					<div class="ibox-content no-padding">
+						<div class="ibox-content">
+							<p>青海青一色电子科技有限公司成立于2013年，注册资金200万，坐落于青海西宁市，是一家专业应用软件自主研发型民营企业，不限于OA办公、工程预算核算、小程序/APP开发、高端政企网站、工作流业务审批、应用系统开发等业务领域。以设计、研发、运维于一体立足于互联网行业，其业务覆盖青海省及全国；以诚信经营、完善售后赢得顾客信赖；以定制开发、软硬件适配、技术运维服务等多种配套经营模式提供技术服务，赢得了广大客户的一致好评！</p>
+							<p>公司自创办至今,一贯以“严要求、高品味、高标准”为方向定位; “以质求胜、诚实信用、热忱服务、互利双赢”为经营宗旨;以“追求卓越、超越自我”为经营理念;以务实的信念全情投入到技术研发及经营发展中去,满足政府、企事单位个性化定制的需求,深受广大顾客的信赖。</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+            <div class="col-sm-4">
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5>用户项目列表</h5>
-					<div class="ibox-tools">
-						<a class="collapse-link">
-							<i class="fa fa-chevron-up"></i>
-						</a>
-						<a class="close-link">
-							<i class="fa fa-times"></i>
-						</a>
-					</div>
-				</div>
-				<div class="ibox-content">
-					<table class="table table-hover no-margins">
-						<thead>
-						<tr>
-							<th>状态</th>
-							<th>日期</th>
-							<th>用户</th>
-							<th>值</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 11:20</td>
-							<td>青衣5858</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 24%</td>
-						</tr>
-						<tr>
-							<td><span class="label label-warning">已取消</span>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 10:40</td>
-							<td>徐子崴</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 01:30</td>
-							<td>姜岚昕</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 54%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 02:20</td>
-							<td>武汉大兵哥</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 12%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 09:40</td>
-							<td>荆莹儿</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 22%</td>
-						</tr>
-						<tr>
-							<td><span class="label label-primary">已完成</span>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 04:10</td>
-							<td>栾某某</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 12:08</td>
-							<td>范范范二妮</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 23%</td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/ajax/libs/flot/jquery.flot.js}"></script>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>关于我们</h5>
 
-<th:block th:include="include :: sparkline-js" />
-<script type="text/javascript">
-	$(document).ready(function () {
-		var data2 = [
-			[gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
-			[gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
-			[gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
-			[gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
-			[gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
-			[gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
-			[gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
-			[gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
-		];
+                    </div>
+                    <div class="ibox-content">
+						<p>持续深耕于互联网行业，致力于提供一套简单、高效、易用的java内容管理系统，服务于政府、企业、组织、学校、个人及企业等。</p>
+						<p>核心业务：工程项目OA办公系统、CMS内容管理系统，以设计、研发、运维于一体，以定制开发、软硬件适配、技术运维服务等多种配套经营模式提供技术服务</p>
+                        <p><i class="fa fa-send-o"></i> 官网：<a href="http://www.xnqys.com" target="_blank">http://www.xnqys.com</a>
+                        </p>
+						<p><i class="fa fa-qq"></i> QQ群：749272719
 
-		var data3 = [
-			[gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
-			[gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
-			[gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
-			[gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
-			[gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
-			[gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
-			[gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
-			[gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
-		];
+                        <p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">/ 15609712256(微信同号) && javaPioneer</a>
+                        </p>
+<!--                        <p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">/ *若依</a>-->
+<!--                        </p>-->
+                    </div>
+                </div>
+            </div>
 
-
-		var dataset = [
-			{
-				label: "文章数",
-				data: data3,
-				color: "#1ab394",
-				bars: {
-					show: true,
-					align: "center",
-					barWidth: 24 * 60 * 60 * 600,
-					lineWidth: 0
-				}
-
-			}, {
-				label: "采纳数",
-				data: data2,
-				yaxis: 2,
-				color: "#464f88",
-				lines: {
-					lineWidth: 1,
-					show: true,
-					fill: true,
-					fillColor: {
-						colors: [{
-							opacity: 0.2
-						}, {
-							opacity: 0.2
-						}]
-					}
-				},
-				splines: {
-					show: false,
-					tension: 0.6,
-					lineWidth: 1,
-					fill: 0.1
-				},
-			}
-		];
-
-
-		var options = {
-			xaxis: {
-				mode: "time",
-				tickSize: [3, "day"],
-				tickLength: 0,
-				axisLabel: "Date",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Arial',
-				axisLabelPadding: 10,
-				color: "#838383"
-			},
-			yaxes: [{
-				position: "left",
-				max: 1070,
-				color: "#838383",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Arial',
-				axisLabelPadding: 3
-			}, {
-				position: "right",
-				clolor: "#838383",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: ' Arial',
-				axisLabelPadding: 67
-			}
-			],
-			legend: {
-				noColumns: 1,
-				labelBoxBorderColor: "#000000",
-				position: "nw"
-			},
-			grid: {
-				hoverable: false,
-				borderWidth: 0,
-				color: '#838383'
-			}
-		};
-
-		function gd(year, month, day) {
-			return new Date(year, month - 1, day).getTime();
-		}
-
-		var previousPoint = null,
-				previousLabel = null;
-
-		$.plot($("#flot-dashboard-chart"), dataset, options);
-	});
-</script>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>扩展功能</h5>
+                    </div>
+                    <div class="ibox-content">
+							<p>文章管理：文章内容推荐、置顶、幻灯、审核、发布、跳转链接。</p>
+							<p>分类管理：无限级分类，支持自定义分类模板。</p>
+							<p>专题专栏：专题专栏，支持自定义分类模板。</p>
+							<p>导航管理：支持自定义导航模板，自定义跳转链接、高亮显示。</p>
+							<p>在线投稿：投稿功能，支持在线投稿，投稿管理，投稿审核。</p>
+							<p>单页管理：单页面增加、修改、删除。</p>
+							<p>信箱管理：支持在线写信、回复、加密查看等。</p>
+							<p>文章统计：各部门的文章统计，可直观查看文章排名。</p>
+							<p>加密下载：后台可以自由切换是否加密的文件下载。</p>
+							<p>站群管理：多级用户集约化管理，支持用户分配角色、分配数据权限、文章审批。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+	    $('#pay-qrcode').click(function(){
+	        var html=$(this).html();
+	        parent.layer.open({
+	            title: false,
+	            type: 1,
+	            closeBtn:false,
+	            shadeClose:true,
+	            area: ['600px', '360px'],
+	            content: html
+	        });
+	    });
+    </script>
 </body>
 </html>

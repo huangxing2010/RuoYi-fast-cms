@@ -33,9 +33,14 @@ public class ShiroConstants
     public static final String ERROR = "errorMsg";
 
     /**
-     * 编码格式
+     * csrf session content
      */
-    public static final String ENCODING = "UTF-8";
+    public static final String CSRF_TOKEN = "csrf_token";
+
+    /**
+     * csrf request header
+     */
+    public static final String X_CSRF_TOKEN = "X-CSRF-Token";
 
     /**
      * 当前在线会话

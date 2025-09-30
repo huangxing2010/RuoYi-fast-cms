@@ -13,7 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="leader"     column="leader"      />
 		<result property="phone"      column="phone"       />
 		<result property="email"      column="email"       />
-		<result property="deptType"     column="dept_type"      />
 		<result property="status"     column="status"      />
 		<result property="delFlag"    column="del_flag"    />
 		<result property="parentName" column="parent_name" />
@@ -24,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="selectDeptVo">
-        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.dept_type, d.status, d.del_flag, d.create_by, d.create_time
+        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time 
         from sys_dept d
     </sql>
     
@@ -39,11 +38,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectDeptList" parameterType="Dept" resultMap="DeptResult">
         <include refid="selectDeptVo"/>
         where d.del_flag = '0'
-		<if test="deptId != null and deptId != 0">AND dept_id = #{deptId}</if>
-        <if test="parentId != null and parentId != 0">AND parent_id = #{parentId}</if>
-		<if test="deptName != null and deptName != ''">AND dept_name like concat('%', #{deptName}, '%')</if>
-		<if test="deptType != null and deptType != ''">AND dept_type = #{deptType}</if>
-		<if test="status != null and status != ''">AND status = #{status}</if>
+		<if test="deptId != null and deptId != 0">
+			AND dept_id = #{deptId}
+		</if>
+        <if test="parentId != null and parentId != 0">
+			AND parent_id = #{parentId}
+		</if>
+		<if test="deptName != null and deptName != ''">
+			AND dept_name like concat('%', #{deptName}, '%')
+		</if>
+		<if test="status != null and status != ''">
+			AND status = #{status}
+		</if>
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
 		order by d.parent_id, d.order_num
@@ -66,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
-		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.dept_type, d.status,
+		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status,
 			(select dept_name from sys_dept where dept_id = d.parent_id) parent_name
 		from sys_dept d
 		where d.dept_id = #{deptId}
@@ -89,8 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="orderNum != null">order_num,</if>
  			<if test="leader != null and leader != ''">leader,</if>
  			<if test="phone != null and phone != ''">phone,</if>
-		    <if test="email != null and email != ''">email,</if>
- 			<if test="deptType != null and deptType != ''">dept_type,</if>
+ 			<if test="email != null and email != ''">email,</if>
  			<if test="status != null">status,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
  			create_time
@@ -103,7 +108,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="leader != null and leader != ''">#{leader},</if>
  			<if test="phone != null and phone != ''">#{phone},</if>
  			<if test="email != null and email != ''">#{email},</if>
- 			<if test="deptType != null and deptType != ''">#{deptType},</if>
  			<if test="status != null">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			sysdate()
@@ -120,7 +124,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="leader != null">leader = #{leader},</if>
  			<if test="phone != null">phone = #{phone},</if>
  			<if test="email != null">email = #{email},</if>
- 			<if test="deptType != null">dept_type = #{deptType},</if>
  			<if test="status != null and status != ''">status = #{status},</if>
  			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
  			update_time = sysdate()

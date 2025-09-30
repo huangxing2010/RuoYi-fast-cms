@@ -1,7 +1,9 @@
 package com.ruoyi.project.system.user.mapper;
 
-import com.ruoyi.project.system.user.domain.User;
+import java.util.Date;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import com.ruoyi.project.system.user.domain.User;
 
 /**
  * 用户表 数据层
@@ -89,6 +91,44 @@ public interface UserMapper
      * @return 结果
      */
     public int updateUser(User user);
+
+    /**
+     * 修改用户头像
+     * 
+     * @param userId 用户ID
+     * @param avatar 头像地址
+     * @return 结果
+     */
+    public int updateUserAvatar(@Param("userId") Long userId, @Param("avatar") String avatar);
+
+    /**
+     * 修改用户状态
+     * 
+     * @param userId 用户ID
+     * @param status 状态
+     * @return 结果
+     */
+    public int updateUserStatus(@Param("userId") Long userId, @Param("status") String status);
+
+    /**
+     * 重置用户密码
+     * 
+     * @param userId 用户ID
+     * @param password 密码
+     * @param salt 盐
+     * @return 结果
+     */
+    public int resetUserPwd(@Param("userId") Long userId, @Param("password") String password, @Param("salt") String salt);
+
+    /**
+     * 更新用户登录信息（IP和登录时间）
+     * 
+     * @param userId 用户ID
+     * @param loginIp 登录IP地址
+     * @param loginDate 登录时间
+     * @return 结果
+     */
+    public int updateLoginInfo(@Param("userId") Long userId, @Param("loginIp") String loginIp, @Param("loginDate") Date loginDate);
 
     /**
      * 新增用户信息
